@@ -97,45 +97,84 @@
                 <h2>House Price Predicting Tool</h2>
             </div>
             <div class="predicting-form">
-                <form>
+                <form id="predictForm">
                     <div class="row">
                         <div class="col-md-6 field-wrp">
-                            <label>Location</label><br>
-                            <input type="text" placeholder="e.g., Thrissur">
+                            <label>Bedrooms</label><br>
+                            <input type="number" id="predBedrooms" placeholder="e.g., 3" required>
                         </div>
                         <div class="col-md-6 field-wrp">
-                            <label>Old or New Construction</label><br>
-                            <select name="cars" id="cars">
-                                <option value>Select Age</option>
-                                <option value="New">New (0-5 years)</option>
-                                <option value="Old">Old (5+ years)</option>
-                            </select>
+                            <label>Bathrooms</label><br>
+                            <input type="number" step="0.25" id="predBathrooms" placeholder="e.g., 2" required>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 field-wrp">
-                            <label>Total Square Footage (sq. ft.)</label><br>
-                            <input type="number" placeholder="e.g., 1800">
+                            <label>Sqft Living</label><br>
+                            <input type="number" id="predSqftLiving" placeholder="e.g., 1800" required>
                         </div>
                         <div class="col-md-6 field-wrp">
-                            <label>Floor Number</label><br>
-                            <input type="number" placeholder="e.g., 2">
+                            <label>Sqft Lot</label><br>
+                            <input type="number" id="predSqftLot" placeholder="e.g., 5000">
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-6 field-wrp">
-                            <label>No of Beadrooms</label><br>
-                            <input type="number" placeholder="e.g., 4">
+                            <label>Floors</label><br>
+                            <input type="number" step="0.5" id="predFloors" placeholder="e.g., 1">
                         </div>
                         <div class="col-md-6 field-wrp">
-                            <label>Parking slot</label><br>
-                            <input type="number" placeholder="e.g., 1">
+                            <label>Year Built</label><br>
+                            <input type="number" id="predYrBuilt" placeholder="e.g., 1990" required>
                         </div>
                     </div>
-
+                    <div class="row">
+                        <div class="col-md-6 field-wrp">
+                            <label>Condition (1-5)</label><br>
+                            <input type="number" min="1" max="5" id="predCondition" placeholder="e.g., 3">
+                        </div>
+                        <div class="col-md-6 field-wrp">
+                            <label>Grade (1-13)</label><br>
+                            <input type="number" min="1" max="13" id="predGrade" placeholder="e.g., 7">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 field-wrp">
+                            <label>View (0-4)</label><br>
+                            <input type="number" min="0" max="4" id="predView" placeholder="e.g., 0">
+                        </div>
+                        <div class="col-md-6 field-wrp d-flex align-items-center">
+                            <input type="checkbox" id="predWaterfront" style="width: auto; margin-right: 10px;">
+                            <label for="predWaterfront" style="margin: 0;">Waterfront</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 field-wrp">
+                            <label>Year Renovated</label><br>
+                            <input type="number" id="predYrRenovated" placeholder="e.g., 2005" value="0">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-5 field-wrp">
+                            <label>Latitude</label><br>
+                            <input type="number" step="any" id="predLat" placeholder="e.g., 47.6062">
+                        </div>
+                        <div class="col-md-5 field-wrp">
+                            <label>Longitude</label><br>
+                            <input type="number" step="any" id="predLong" placeholder="e.g., -122.3321">
+                        </div>
+                        <div class="col-md-2 field-wrp d-flex align-items-end">
+                            <button type="button" id="getLocationBtn" class="btn btn-secondary w-100" style="height: 50px;">Get Location</button>
+                        </div>
+                    </div>
 
                     <input class="submit-button" type="submit" value="Submit">
                 </form>
+
+                <div id="predictionResult" style="display: none; margin-top: 30px; padding: 20px; border: 1px solid #ccc; border-radius: 8px; background-color: #f9f9f9;">
+                    <h4 style="color: #333;">Predicted Price: <span id="priceDisplay" style="color: #28a745; font-weight: bold;"></span></h4>
+                    <p id="locationUsedInfo" style="margin: 0; color: #666; font-size: 0.9em;"></p>
+                </div>
             </div>
         </div>
     </div>
@@ -173,6 +212,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI"
         crossorigin="anonymous"></script>
+
+    <script src="assets/js/api.js" defer></script>
 </body>
 
 </html>

@@ -97,10 +97,31 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     }
 
-// ==========================================
+    // ==========================================
     // 4. ML PREDICTION LOGIC (Updated for full fields)
     // ==========================================
     const predictForm = document.getElementById("predictForm");
+    const getLocationBtn = document.getElementById("getLocationBtn");
+
+    if (getLocationBtn) {
+        getLocationBtn.addEventListener("click", () => {
+            if ("geolocation" in navigator) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        document.getElementById("predLat").value = position.coords.latitude;
+                        document.getElementById("predLong").value = position.coords.longitude;
+                        alert("Location successfully fetched!");
+                    },
+                    (error) => {
+                        console.error("Error getting location: ", error);
+                        alert("Unable to fetch location. The system will use your IP address instead.");
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
+        });
+    }
     
     if (predictForm) {
         predictForm.addEventListener("submit", async (e) => {
@@ -131,7 +152,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 view: parseInt(document.getElementById("predView").value || 0),
                 waterfront: document.getElementById("predWaterfront").checked ? 1 : 0,
                 lat: lat_val ? parseFloat(lat_val) : null,
-                long: long_val ? parseFloat(long_val) : null
+                long: long_val ? parseFloat(long_val) : null,
+                yr_renovated: parseInt(document.getElementById("predYrRenovated").value || 0)
             };
 
             try {
