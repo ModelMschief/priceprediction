@@ -125,6 +125,7 @@ document.addEventListener("DOMContentLoaded", () => {
                 sqft_living: parseInt(document.getElementById("predSqftLiving").value),
                 sqft_lot: sqft_lot_val ? parseInt(sqft_lot_val) : null,
                 yr_built: parseInt(document.getElementById("predYrBuilt").value),
+                yr_renovated: parseInt(document.getElementById("predYrRenovated").value || 0),
                 floors: parseFloat(document.getElementById("predFloors").value || 1),
                 condition: parseInt(document.getElementById("predCondition").value || 3),
                 grade: parseInt(document.getElementById("predGrade").value || 7),
@@ -160,3 +161,24 @@ document.addEventListener("DOMContentLoaded", () => {
             }
         });
     });
+
+    // 5. LOCATION FEATURE
+    const getLocationBtn = document.getElementById("getLocationBtn");
+    if (getLocationBtn) {
+        getLocationBtn.addEventListener("click", () => {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        document.getElementById("predLat").value = position.coords.latitude;
+                        document.getElementById("predLong").value = position.coords.longitude;
+                        alert("Location successfully captured!");
+                    },
+                    (error) => {
+                        alert("Could not get location. We will use an approximate location instead.");
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by this browser.");
+            }
+        });
+    }
