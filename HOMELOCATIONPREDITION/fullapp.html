@@ -52,13 +52,15 @@
         @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
         /* --- Custom Sections & Components --- */
-        .hero-banner {
-            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('assets/images/banner.jpg') no-repeat center center/cover;
-            background-color: #2c3e50;
-            color: white;
-            padding: 100px 0;
-            text-align: center;
-        }
+       .hero-banner {
+    background: 
+        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+        url('assets/images/banner-image.jpg') no-repeat center center;
+    background-size: cover;
+    color: white;
+    padding: 120px 0;
+    text-align: center;
+}
         .innerpage-banner {
             padding: 60px 0;
             background: #1c0f2e;
@@ -202,14 +204,14 @@
             </div>
             <div class="form-container login-form">
                 <h3 class="text-center mb-4">Welcome Back</h3>
-                <form onsubmit="event.preventDefault(); showPage('home');">
+                <form id="loginForm">
                     <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input type="email" class="form-control" placeholder="Enter email" required>
+                        <input type="email" id="loginEmail" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Password</label>
-                        <input type="password" class="form-control" placeholder="Password" required>
+                        <input type="password" id="loginPassword" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-theme w-100 mt-3">Login</button>
                     <div class="reset_login">
@@ -227,18 +229,19 @@
             </div>
             <div class="form-container register-form">
                 <h3 class="text-center mb-4">Sign Up</h3>
-                <form onsubmit="event.preventDefault(); showPage('login');">
+                <form id="registerForm">
                     <div class="mb-3">
                         <label class="form-label">Full Name</label>
-                        <input type="text" class="form-control" placeholder="John Doe" required>
+                        <input type="text" id="registerUsername" class="form-control" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input type="email" class="form-control" placeholder="Enter email" required>
+                       <input type="email" id="registerEmail" class="form-control" required>
+
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Password</label>
-                        <input type="password" class="form-control" placeholder="Create Password" required>
+                        <input type="password" id="registerPassword" class="form-control" required>
                     </div>
                     <button type="submit" class="btn btn-theme w-100 mt-3">Register</button>
                     <div class="text-center mt-4">
@@ -527,6 +530,132 @@
                 alert("Geolocation is not supported by your browser.");
             }
         });
+
+        // ===============================
+// AUTHENTICATION SYSTEM
+// ===============================
+
+// ---------- REGISTER ----------
+document.getElementById("registerForm")?.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const username = document.getElementById("registerUsername").value.trim();
+    const email = document.getElementById("registerEmail").value.trim();
+    const password = document.getElementById("registerPassword").value.trim();
+
+    if (!username || !email || !password) {
+        alert("All fields are required.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`${BASE_URL}/api/register`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.status === "success") {
+            alert("Registration successful. Please login.");
+            showPage("login");
+            document.getElementById("registerForm").reset();
+        } else {
+            alert(data.error || "Registration failed.");
+        }
+
+    } catch (error) {
+        console.error("Register Error:", error);
+        alert("Server connection failed.");
+    }
+});
+
+
+// ---------- LOGIN ----------
+document.getElementById("loginForm")?.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById("loginEmail").value.trim();
+    const password = document.getElementById("loginPassword").value.trim();
+
+    if (!email || !password) {
+        alert("Email and password required.");
+        return;
+    }
+
+    try {
+        const response = await fetch(`${BASE_URL}/api/login`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, password })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.status === "success") {
+
+            // Save user locally
+            localStorage.setItem("user", JSON.stringify(data.user));
+
+            updateNavbarAfterLogin(data.user.username);
+
+            alert("Login successful.");
+            showPage("home");
+            document.getElementById("loginForm").reset();
+
+        } else {
+            alert(data.error || "Invalid credentials.");
+        }
+
+    } catch (error) {
+        console.error("Login Error:", error);
+        alert("Server connection failed.");
+    }
+});
+
+
+// ---------- NAVBAR UPDATE ----------
+function updateNavbarAfterLogin(username) {
+    const loginLink = document.getElementById("nav-login");
+    const registerLink = document.getElementById("nav-register");
+
+    if (loginLink) {
+        loginLink.innerText = `Hi, ${username}`;
+        loginLink.onclick = null;
+        loginLink.style.cursor = "default";
+    }
+
+    if (registerLink) {
+        registerLink.innerText = "Logout";
+        registerLink.classList.remove("btn-theme");
+        registerLink.onclick = logoutUser;
+    }
+}
+
+
+function logoutUser() {
+    localStorage.removeItem("user");
+
+    document.getElementById("nav-login").innerText = "Login";
+    document.getElementById("nav-login").onclick = () => showPage("login");
+    document.getElementById("nav-login").style.cursor = "pointer";
+
+    const registerLink = document.getElementById("nav-register");
+    registerLink.innerText = "Register";
+    registerLink.classList.add("btn-theme");
+    registerLink.onclick = () => showPage("register");
+
+    showPage("home");
+}
+
+// ---------- CHECK SESSION ON PAGE LOAD ----------
+window.addEventListener("DOMContentLoaded", () => {
+    const user = JSON.parse(localStorage.getItem("user"));
+    if (user) {
+        updateNavbarAfterLogin(user.username);
+    }
+});
 
         // --- FORM SUBMISSION & API FETCH ---
         document.getElementById('predictionForm').addEventListener('submit', async (e) => {
