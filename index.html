@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Real Estate Valuator</title>
+    <!-- Tailwind CSS for styling -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 1rem;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+        }
+        /* Loader Animation */
+        .loader {
+            border: 4px solid #f3f3f3;
+            border-top: 4px solid #3b82f6;
+            border-radius: 50%;
+            width: 30px;
+            height: 30px;
+            animation: spin 1s linear infinite;
+            display: none;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+    </style>
+</head>
+<body class="min-h-screen py-12 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-100 to-slate-200">
+
+    <div class="max-w-4xl mx-auto glass-panel p-8">
+        
+        <!-- Header -->
+        <div class="text-center mb-10">
+            <h1 class="text-3xl font-extrabold text-slate-800 tracking-tight sm:text-4xl">
+                <i class="fa-solid fa-house-chimney text-blue-600 mr-2"></i> AI Property Valuator
+            </h1>
+            <p class="mt-4 text-lg text-slate-500">
+                Enter the details of a home to get an instant, machine-learning-powered price estimate.
+            </p>
+        </div>
+
+        <form id="predictionForm" class="space-y-8">
+            <!-- Grid Layout for Inputs -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                
+                <!-- Basic Info -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-slate-700 border-b pb-2">Core Details</h3>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Bedrooms *</label>
+                        <input type="number" id="bedrooms" required class="w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2.5 outline-none" placeholder="e.g., 3">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Bathrooms *</label>
+                        <input type="number" step="0.25" id="bathrooms" required class="w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2.5 outline-none" placeholder="e.g., 2.5">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Living Area (SqFt) *</label>
+                        <input type="number" id="sqft_living" required class="w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2.5 outline-none" placeholder="e.g., 2000">
+                    </div>
+
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Lot Size (SqFt) <span class="text-slate-400 font-normal">(Optional)</span></label>
+                        <input type="number" id="sqft_lot" class="w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2.5 outline-none" placeholder="Auto-calculated if blank">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium text-slate-700 mb-1">Year Built *</label>
+                        <input type="number" id="yr_built" required class="w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2.5 outline-none" placeholder="e.g., 1995">
+                    </div>
+                </div>
+
+                <!-- Quality & Location Info -->
+                <div class="space-y-4">
+                    <h3 class="text-lg font-semibold text-slate-700 border-b pb-2">Quality & Location</h3>
+                    
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Floors</label>
+                            <input type="number" step="0.5" id="floors" value="1" class="w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2.5 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Condition (1-5)</label>
+                            <input type="number" min="1" max="5" id="condition" value="3" class="w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2.5 outline-none">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">Grade (1-13)</label>
+                            <input type="number" min="1" max="13" id="grade" value="7" class="w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2.5 outline-none">
+                        </div>
+                        <div>
+                            <label class="block text-sm font-medium text-slate-700 mb-1">View (0-4)</label>
+                            <input type="number" min="0" max="4" id="view" value="0" class="w-full rounded-md border-slate-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 border p-2.5 outline-none">
+                        </div>
+                    </div>
+
+                    <div class="flex items-center space-x-2 pt-2">
+                        <input type="checkbox" id="waterfront" class="h-4 w-4 text-blue-600 border-slate-300 rounded focus:ring-blue-500">
+                        <label class="text-sm font-medium text-slate-700">Waterfront Property</label>
+                    </div>
+
+                    <!-- Geolocation Section -->
+                    <div class="mt-6 p-4 bg-blue-50 rounded-lg border border-blue-100">
+                        <p class="text-sm text-slate-600 mb-3">
+                            <i class="fa-solid fa-location-dot text-blue-500 mr-1"></i> Location greatly impacts price.
+                        </p>
+                        <button type="button" id="getLocationBtn" class="w-full bg-white text-blue-600 border border-blue-200 hover:bg-blue-50 font-medium py-2 px-4 rounded-md transition duration-150 ease-in-out">
+                            <i class="fa-solid fa-crosshairs mr-2"></i> Use My Current Location
+                        </button>
+                        <div id="locationStatus" class="text-xs text-green-600 mt-2 font-medium hidden">
+                            <i class="fa-solid fa-check-circle"></i> Location Acquired (<span id="latDisplay"></span>, <span id="longDisplay"></span>)
+                        </div>
+                        <p class="text-xs text-slate-400 mt-2">If skipped, we will estimate based on your network IP.</p>
+                        
+                        <!-- Hidden inputs for coordinates -->
+                        <input type="hidden" id="lat">
+                        <input type="hidden" id="long">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Submit Button & Results -->
+            <div class="pt-6 border-t flex flex-col items-center">
+                <button type="submit" class="w-full sm:w-auto bg-blue-600 hover:bg-blue-700 text-white font-bold py-3 px-10 rounded-lg shadow-md transition duration-150 ease-in-out text-lg">
+                    Predict Property Price
+                </button>
+                <div class="loader mt-4" id="loadingSpinner"></div>
+            </div>
+        </form>
+
+        <!-- Result Box -->
+        <div id="resultBox" class="mt-8 hidden bg-green-50 border border-green-200 rounded-lg p-6 text-center transform transition-all duration-500 scale-95 opacity-0">
+            <h2 class="text-xl font-medium text-green-800 mb-2">Estimated Market Value</h2>
+            <div class="text-5xl font-extrabold text-green-600 mb-2" id="priceDisplay">$0</div>
+            <p class="text-sm text-green-700" id="locationUsedInfo">Calculated using advanced ML.</p>
+        </div>
+
+    </div>
+
+    <script>
+        // --- CONFIGURATION ---
+        // Change this to your live server URL when you deploy (e.g., https://your-api.com)
+        const BASE_URL = "http://127.0.0.1:8000"; 
+        // ---------------------
+
+        // Geolocation Logic (Browser API - Most Accurate)
+        const getLocationBtn = document.getElementById('getLocationBtn');
+        const latInput = document.getElementById('lat');
+        const longInput = document.getElementById('long');
+        const locationStatus = document.getElementById('locationStatus');
+
+        getLocationBtn.addEventListener('click', () => {
+            if (navigator.geolocation) {
+                getLocationBtn.innerHTML = '<i class="fa-solid fa-spinner fa-spin mr-2"></i> Locating...';
+                navigator.geolocation.getCurrentPosition(
+                    (position) => {
+                        latInput.value = position.coords.latitude;
+                        longInput.value = position.coords.longitude;
+                        
+                        document.getElementById('latDisplay').innerText = position.coords.latitude.toFixed(4);
+                        document.getElementById('longDisplay').innerText = position.coords.longitude.toFixed(4);
+                        
+                        getLocationBtn.classList.add('hidden');
+                        locationStatus.classList.remove('hidden');
+                    },
+                    (error) => {
+                        alert("Could not get location. Make sure location permissions are enabled.");
+                        getLocationBtn.innerHTML = '<i class="fa-solid fa-crosshairs mr-2"></i> Use My Current Location';
+                    }
+                );
+            } else {
+                alert("Geolocation is not supported by your browser.");
+            }
+        });
+
+        // Form Submission Logic
+        document.getElementById('predictionForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            // UI States
+            const spinner = document.getElementById('loadingSpinner');
+            const resultBox = document.getElementById('resultBox');
+            spinner.style.display = 'block';
+            resultBox.classList.add('hidden');
+            resultBox.classList.remove('scale-100', 'opacity-100');
+
+            // Gather Data
+            const payload = {
+                bedrooms: parseInt(document.getElementById('bedrooms').value),
+                bathrooms: parseFloat(document.getElementById('bathrooms').value),
+                sqft_living: parseInt(document.getElementById('sqft_living').value),
+                sqft_lot: document.getElementById('sqft_lot').value ? parseInt(document.getElementById('sqft_lot').value) : null,
+                floors: parseFloat(document.getElementById('floors').value),
+                waterfront: document.getElementById('waterfront').checked ? 1 : 0,
+                view: parseInt(document.getElementById('view').value),
+                condition: parseInt(document.getElementById('condition').value),
+                grade: parseInt(document.getElementById('grade').value),
+                yr_built: parseInt(document.getElementById('yr_built').value),
+                yr_renovated: 0, // Defaults to 0 if not specified
+                lat: latInput.value ? parseFloat(latInput.value) : null,
+                long: longInput.value ? parseFloat(longInput.value) : null,
+            };
+
+            try {
+                // Send to Python Backend
+                const response = await fetch(`${BASE_URL}/predict`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) throw new Error("Network response was not ok");
+                
+                const data = await response.json();
+
+                if (data.status === "success") {
+                    // Format currency
+                    const formattedPrice = new Intl.NumberFormat('en-US', {
+                        style: 'currency',
+                        currency: 'USD',
+                        maximumFractionDigits: 0
+                    }).format(data.predicted_price);
+
+                    document.getElementById('priceDisplay').innerText = formattedPrice;
+                    
+                    // Show which location method was used
+                    const locText = latInput.value 
+                        ? "Calculated using your precise GPS coordinates." 
+                        : "Calculated using your network IP approximate location.";
+                    document.getElementById('locationUsedInfo').innerText = locText;
+
+                    // Animate Result
+                    resultBox.classList.remove('hidden');
+                    setTimeout(() => resultBox.classList.add('scale-100', 'opacity-100'), 50);
+                } else {
+                    alert("Error from server: " + data.error);
+                }
+
+            } catch (error) {
+                console.error('Error:', error);
+                alert("Failed to connect to the backend. Is your Flask server running?");
+            } finally {
+                spinner.style.display = 'none';
+            }
+        });
+    </script>
+</body>
+</html>

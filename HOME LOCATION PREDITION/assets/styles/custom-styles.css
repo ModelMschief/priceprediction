@@ -1,0 +1,283 @@
+ header .header-div {
+     /* background-color: black !important; */
+     padding: 10px 30px;
+     background: rgba(28, 15, 46, 0.85);
+     backdrop-filter: blur(8px);
+     -webkit-backdrop-filter: blur(8px);
+     color: #fff;
+ }
+
+ header .header-div .row {
+     align-items: center;
+ }
+
+ header .logo-div img {
+     width: 40%;
+ }
+
+ header .menu-ul {
+     display: flex;
+     list-style: none;
+ }
+
+ header .menu-ul li {
+     color: white;
+     padding: 0 20px;
+ }
+
+ header .menu-ul li a {
+     color: #fff;
+     text-decoration: none;
+ }
+
+ header .menu-ul li a:hover {
+     color: red;
+     cursor: pointer;
+ }
+
+ /* Footer */
+ footer {
+     background: #000;
+     margin-top: 20px;
+     color: #fff;
+     padding: 50px 0;
+ }
+
+ footer .logo-div img {
+     width: 90%;
+ }
+
+ footer p {
+     color: #978383;
+ }
+
+ footer li:hover {
+     cursor: pointer;
+     color: red;
+ }
+
+ /* home banner */
+ .home-banner {
+     padding: 30px;
+     background: url('../../assets/images/banner-image.jpg');
+     background-size: cover;
+     background-position: center;
+     background-repeat: no-repeat;
+     color: #fff;
+ }
+
+ .home-banner .home-banner-container {
+     /* background-color: #fff; */
+     padding: 7rem;
+     text-align: center;
+     border-radius: 30px;
+     /* margin-top: 20px; */
+ }
+
+ .home-banner .banner-heading {
+     font-size: 55px;
+     font-weight: 700;
+ }
+
+ .home-banner .home-buttons {
+     padding-top: 20px;
+
+ }
+
+ .home-banner .price-prediction {
+     padding: 13px 20px;
+     border: none;
+     border-radius: 20px;
+     background-color: #F4C430;
+     color: #1C0F2E;
+     font-weight: 600;
+     margin-right: 20px;
+ }
+
+ .home-banner .price-prediction.active {
+     padding: 13px 20px;
+     border: none;
+     border-radius: 20px;
+     background-color: #a17231;
+     color: #1C0F2E;
+     font-weight: 600;
+     margin-right: 20px;
+     box-shadow: rgba(46, 35, 2, 0.4);
+ }
+
+ .home-banner .price-prediction a {
+     text-decoration: none;
+     color: #000;
+ }
+
+ /* Predicting-form */
+ .house-predicting-tool,
+ .price-predicting-tool {
+     padding: 50px 0;
+ }
+
+ .house-predicting-tool .form-head h2,
+ .price-predicting-tool .form-head h2 {
+     font-weight: 700;
+     font-size: 40px;
+ }
+
+ .house-predicting-tool .predicting-form,
+ .price-predicting-tool .predicting-form {
+     padding-top: 30px;
+ }
+
+ .house-predicting-tool form label,
+ .price-predicting-tool form label {
+     padding-bottom: 10px;
+
+ }
+
+ .house-predicting-tool form input,
+ .house-predicting-tool form select,
+ .price-predicting-tool form input,
+ .price-predicting-tool form select {
+     width: 100%;
+     padding: 10px;
+     border-radius: 20px;
+     border: 1px solid #d1d5db;
+ }
+
+ .house-predicting-tool form .field-wrp,
+ .price-predicting-tool form .field-wrp {
+     padding-bottom: 10px;
+ }
+
+ .house-predicting-tool .submit-button,
+ .price-predicting-tool .submit-button {
+     padding: 10px 44px;
+     margin-top: 25px;
+     background-color: green;
+     color: #fff;
+ }
+
+ /* login form */
+ .login-form,
+ .register-form,
+ .reset-form {
+     padding: 50px 0;
+ }
+
+ .login-form .form-head h2,
+ .register-form .form-head h2,
+ .reset-form .form-head h2 {
+     font-weight: 700;
+     font-size: 40px;
+     text-align: center;
+ }
+
+ .login-form .signin-form,
+ .register-form .signin-form,
+ .reset-form .signin-form {
+     padding-top: 30px;
+     width: 50%;
+     margin: 0 auto;
+ }
+
+ .login-form form label,
+ .register-form form label,
+ .reset-form form label {
+     padding-bottom: 10px;
+
+ }
+
+ .login-form form input,
+ .register-form form input,
+ .reset-form form input {
+     width: 100%;
+     padding: 10px;
+     border-radius: 20px;
+     border: 1px solid #d1d5db;
+ }
+
+ .login-form form .field-wrp,
+ .register-form form .field-wrp,
+ .reset-form form .field-wrp {
+     padding-bottom: 10px;
+ }
+
+ .login-form .submit-button,
+ .register-form .submit-button,
+ .reset-form .submit-button {
+     padding: 10px 44px;
+     margin-top: 25px;
+     background-color: green;
+     color: #fff;
+ }
+
+ .login-form .reset_login,
+ .register-form .reset_login {
+     display: flex;
+     justify-content: space-between;
+     padding-top: 20px;
+ }
+
+ .register-form .pasword-reset-note {
+     text-align: center;
+ }
+
+ /* Top Recomentations */
+ .top-recomentations {
+     padding: 50px 0;
+ }
+ .top-recomentations h2{
+    padding-bottom: 20px;
+ }
+ .top-recomentations .card-body {
+     text-align: center;
+ }
+
+ .top-recomentations .card-title {
+     font-size: 25px;
+     color: green;
+ }
+  .top-recomentations .specifications ul{
+        display: flex;
+    justify-content: space-evenly;
+  }
+  .view-details{
+  
+    border: none;
+     background-color: #16a34a;
+        color: #fff;
+  }
+    .view-details:hover{
+         background-color: #F4C430;
+    color: #000;
+    }
+
+    /* Cozy Village Cottage  */
+     .innerpage-banner {
+     padding: 10%;
+     background: url('../../assets/images/cozy-village-cottage-with-blur.png');
+     background-size: cover;
+     background-position: center;
+     background-repeat: no-repeat;
+     color: #fff;
+     text-align: center;
+ }
+ .description{
+        padding: 50px 0;
+ }
+ .description .decs h2, .technical h2{
+    font-size: 40px;
+    color: green;
+ }
+  .description .decs p{
+        padding-top: 16px;
+    font-size: 20px;
+}
+.technical ul li{
+    font-size: 20px;
+}
+  .technical{
+    padding-top: 20px;
+  }
+  .technical h2{
+    padding-bottom: 10px;
+  }
