@@ -80,40 +80,39 @@
                 <h2>Register</h2>
             </div>
             <div class="signin-form">
-                <form>
-                    <div class="rows">
-                         <div class=" field-wrp">
-                            <label>Name</label><br>
-                            <input type="text" placeholder="e.g., Femin Rose">
-                        </div>
-                        <div class=" field-wrp">
-                            <label>Email</label><br>
-                            <input type="email" placeholder="e.g., abc@gmail.com">
-                        </div>
-                        <div class=" field-wrp">
-                            <label>Phone number</label><br>
-                            <input type="text" placeholder="e.g., 1236547890">
-                        </div>
-                        <div class=" field-wrp">
-                            <label>Country</label><br>
-                            <input type="Text" placeholder="e.g., India">
-                        </div>
-                        <div class=" field-wrp">
-                            <label>Password</label><br>
-                            <input type="password" placeholder="e.g., Abc@123#">
-                        </div>
-                        <div class=" field-wrp">
-                            <label>Re enter Password</label><br>
-                            <input type="password" placeholder="e.g., Abc@123#">
-                        </div>
-                    </div>
-                    <input class="submit-button" type="submit" value="Register">
-                    <div class="reset_login">
-                        <a href="reset-password.html">Reset Password</a>
-                        <a href="login.html">Login</a>
-                    </div>
-                </form>
+    <form id="registerForm">
+        <div class="rows">
+             <div class=" field-wrp">
+                <label>Name</label><br>
+                <input type="text" id="regName" placeholder="e.g., Femin Rose" required>
             </div>
+            <div class=" field-wrp">
+                <label>Email</label><br>
+                <input type="email" id="regEmail" placeholder="e.g., abc@gmail.com" required>
+            </div>
+            <div class=" field-wrp">
+                <label>Phone number</label><br>
+                <input type="text" placeholder="e.g., 1236547890"> </div>
+            <div class=" field-wrp">
+                <label>Country</label><br>
+                <input type="text" placeholder="e.g., India"> </div>
+            <div class=" field-wrp">
+                <label>Password</label><br>
+                <input type="password" id="regPassword" placeholder="e.g., Abc@123#" required>
+            </div>
+            <div class=" field-wrp">
+                <label>Re enter Password</label><br>
+                <input type="password" id="regConfirmPassword" placeholder="e.g., Abc@123#" required>
+            </div>
+        </div>
+        <input class="submit-button" type="submit" value="Register">
+        <div class="reset_login">
+            <a href="reset-password.html">Reset Password</a>
+            <a href="login.html">Login</a>
+        </div>
+    </form>
+</div>
+<script src="assets/js/api.js"></script>
         </div>
     </div>
 
