@@ -159,4 +159,4 @@ document.addEventListener("DOMContentLoaded", () => {
                 locInfo.innerText = "Make sure the Flask server is running.";
             }
         });
-    }});
+    });

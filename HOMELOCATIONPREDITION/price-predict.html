@@ -54,7 +54,7 @@
 
 
                                     </li>
-                                    <li><a href="login.html">Login</a></li>
+                                      <li><a href="login.html">Login</a></li>
                                 </ul>
                             </nav>
                         </div>
@@ -81,41 +81,65 @@
             <h6>Discover future pricing through AI or locate ideal homes based on your precise budget and location
                 needs.</h6>
             <div class="home-buttons">
-                <button class="price-prediction"><a href="price-predict.html">Look for Pricing (Prediction)
-                    </a></button>
+                <button class="price-prediction active"><a href="#">Look for Pricing (Prediction) </a></button>
                 <button class="price-prediction"><a href="place-predict.html">Check Where the Place (Reverse Lookup)</a>
                 </button>
             </div>
         </div>
     </div>
     <!-- *************************************************  END Banner  ********************************************* -->
-    <div class="top-recomentations">
+    <!-- *************************************************  Form  ********************************************* -->
+
+
+    <div class="house-predicting-tool">
         <div class="container">
-            <h2>Top Recomentations</h2>
-            <div class="card" style="width: 18rem;">
-                <img src="assets/images/images.jpeg" class="card-img-top" alt="...">
-                <div class="card-body">
-                    <h5 class="card-title">Cozy Village Cottage</h5>
-                   <h4>15.00 Lakhs</h4>
-                   <div class="specifications">
-                    <ul>
-                        <li>950 sq. ft</li>
-                        <li>2 Beds</li>
-                    </ul>
-                   
-                   </div>
-                   <p>Thrissur, Kerala</p>
-                    <a href="cozy-village-cottage.html" class="btn btn-primary view-details">View Details</a>
-                </div>
+            <div class="form-head">
+                <h2>House Price Predicting Tool</h2>
+            </div>
+            <div class="predicting-form">
+                <form>
+                    <div class="row">
+                        <div class="col-md-6 field-wrp">
+                            <label>Location</label><br>
+                            <input type="text" placeholder="e.g., Thrissur">
+                        </div>
+                        <div class="col-md-6 field-wrp">
+                            <label>Old or New Construction</label><br>
+                            <select name="cars" id="cars">
+                                <option value>Select Age</option>
+                                <option value="New">New (0-5 years)</option>
+                                <option value="Old">Old (5+ years)</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 field-wrp">
+                            <label>Total Square Footage (sq. ft.)</label><br>
+                            <input type="number" placeholder="e.g., 1800">
+                        </div>
+                        <div class="col-md-6 field-wrp">
+                            <label>Floor Number</label><br>
+                            <input type="number" placeholder="e.g., 2">
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-6 field-wrp">
+                            <label>No of Beadrooms</label><br>
+                            <input type="number" placeholder="e.g., 4">
+                        </div>
+                        <div class="col-md-6 field-wrp">
+                            <label>Parking slot</label><br>
+                            <input type="number" placeholder="e.g., 1">
+                        </div>
+                    </div>
+
+
+                    <input class="submit-button" type="submit" value="Submit">
+                </form>
             </div>
         </div>
     </div>
-
-
-
-
-
-
+    <!-- *************************************************  END Form  ********************************************* -->
 
     <!-- *************************************************  Footer  ********************************************* -->
     <footer>
