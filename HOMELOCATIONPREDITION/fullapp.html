@@ -91,33 +91,79 @@
         /* Predictor Specific Styles */
         .predict-wrapper { max-width: 900px; margin: 50px auto; background: #fff; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
         .result-box { background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 30px; margin-top: 30px; text-align: center; transition: all 0.5s ease; }
+
+        /* Toast Notification System */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 99999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+        .toast-msg {
+            pointer-events: auto;
+            min-width: 300px;
+            max-width: 420px;
+            padding: 16px 20px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+            animation: toastSlideIn 0.4s ease;
+            opacity: 1;
+            transition: opacity 0.4s ease, transform 0.4s ease;
+        }
+        .toast-msg.toast-success { background: linear-gradient(135deg, #16a34a, #22c55e); }
+        .toast-msg.toast-error { background: linear-gradient(135deg, #dc2626, #ef4444); }
+        .toast-msg.toast-warning { background: linear-gradient(135deg, #d97706, #f59e0b); }
+        .toast-msg .toast-icon { font-size: 20px; flex-shrink: 0; }
+        .toast-msg .toast-text { flex: 1; line-height: 1.4; }
+        .toast-msg .toast-close {
+            background: none; border: none; color: rgba(255,255,255,0.7); font-size: 18px;
+            cursor: pointer; padding: 0; flex-shrink: 0;
+        }
+        .toast-msg .toast-close:hover { color: #fff; }
+        .toast-msg.toast-exit { opacity: 0; transform: translateX(80px); }
+        @keyframes toastSlideIn {
+            from { opacity: 0; transform: translateX(80px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
     </style>
 </head>
 <body>
+
+    <!-- Toast Notification Container -->
+    <div class="toast-container" id="toastContainer"></div>
 
     <!-- ************************************************* Header ************************************************* -->
     <header>
         <div class="header-div">
             <div class="container">
-                <div class="row">
-                    <div class="col-md-4">
-                        <div class="logo-div" onclick="showPage('home')">
-                           <!-- Fallback handled if image is missing -->
-                           <img src="assets/images/logo-final.png" alt="Smart Dwellings" onerror="this.src='https://via.placeholder.com/200x60?text=Smart+Dwellings'">
-                        </div>
+                <nav class="navbar navbar-expand-lg navbar-dark p-0">
+                    <div class="logo-div" onclick="showPage('home')" style="cursor:pointer;">
+                        <img src="assets/images/logo-final.png" alt="Smart Dwellings" onerror="this.src='https://via.placeholder.com/200x60?text=Smart+Dwellings'">
                     </div>
-                    <div class="col-md-8 d-flex align-items-center justify-content-end">
-                        <nav>
-                            <ul class="menu-ul">
-                                <li><a onclick="showPage('home')" id="nav-home" class="active">Home</a></li>
-                                <li><a onclick="showPage('price-predict')" id="nav-price-predict">Price Predict</a></li>
-                                <li><a onclick="showPage('place-predict')" id="nav-place-predict">Place Predict</a></li>
-                                <li><a onclick="showPage('login')" id="nav-login">Login</a></li>
-                                <li><a onclick="showPage('register')" id="nav-register" class="btn btn-theme text-white px-3 py-1" style="margin-top:-5px;">Register</a></li>
-                            </ul>
-                        </nav>
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
+                        <ul class="navbar-nav align-items-lg-center gap-lg-3 gap-2 mt-3 mt-lg-0">
+                            <li class="nav-item"><a class="nav-link active" onclick="showPage('home')" id="nav-home" style="cursor:pointer;">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showPage('price-predict')" id="nav-price-predict" style="cursor:pointer;">Price Predict</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showPage('place-predict')" id="nav-place-predict" style="cursor:pointer;">Place Predict</a></li>
+                            <li class="nav-item d-none" id="nav-dashboard-li"><a class="nav-link" onclick="showPage('dashboard')" id="nav-dashboard" style="cursor:pointer;">Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showPage('login')" id="nav-login" style="cursor:pointer;">Login</a></li>
+                            <li class="nav-item"><a class="nav-link btn btn-theme text-white px-3 py-1" onclick="showPage('register')" id="nav-register" style="cursor:pointer;">Seller Register</a></li>
+                        </ul>
                     </div>
-                </div>
+                </nav>
             </div>
         </div>
     </header>
@@ -222,28 +268,36 @@
             </div>
         </div>
 
-        <!-- 3. REGISTER PAGE -->
+        <!-- 3. REGISTER PAGE (Seller Registration) -->
         <div id="register" class="page-view">
             <div class="innerpage-banner">
-                <h2>Create an Account</h2>
+                <h2>Register a Seller Account</h2>
             </div>
             <div class="form-container register-form">
-                <h3 class="text-center mb-4">Sign Up</h3>
+                <h3 class="text-center mb-2">Become a Seller</h3>
+                <p class="text-center text-muted mb-4 small">Create your seller account to list properties on Smart Dwellings.</p>
                 <form id="registerForm">
                     <div class="mb-3">
                         <label class="form-label">Full Name</label>
-                        <input type="text" id="registerUsername" class="form-control" required>
+                        <input type="text" id="registerUsername" class="form-control" placeholder="Your full name" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email address</label>
-                       <input type="email" id="registerEmail" class="form-control" required>
-
+                        <input type="email" id="registerEmail" class="form-control" placeholder="seller@example.com" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Phone Number</label>
+                        <input type="tel" id="registerPhone" class="form-control" placeholder="e.g., 9876543210" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Address</label>
+                        <input type="text" id="registerAddress" class="form-control" placeholder="Your business/home address" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Password</label>
-                        <input type="password" id="registerPassword" class="form-control" required>
+                        <input type="password" id="registerPassword" class="form-control" placeholder="Create a strong password" required minlength="6">
                     </div>
-                    <button type="submit" class="btn btn-theme w-100 mt-3">Register</button>
+                    <button type="submit" class="btn btn-theme w-100 mt-3">Register as Seller</button>
                     <div class="text-center mt-4">
                         <span class="text-muted">Already have an account? </span>
                         <a onclick="showPage('login')" class="text-success fw-bold" style="cursor:pointer;">Login here</a>
@@ -258,13 +312,17 @@
                 <h2>Reset Password</h2>
             </div>
             <div class="form-container">
-                <p class="text-center text-muted mb-4">Enter your email address and we'll send you a link to reset your password.</p>
-                <form onsubmit="event.preventDefault(); alert('Reset link sent!'); showPage('login');">
-                    <div class="mb-4">
+                <p class="text-center text-muted mb-4">Enter your email and choose a new password.</p>
+                <form id="resetPasswordForm">
+                    <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input type="email" class="form-control" placeholder="Enter your email" required>
+                        <input type="email" id="resetEmail" class="form-control" placeholder="Enter your email" required>
                     </div>
-                    <button type="submit" class="btn btn-theme w-100">Send Reset Link</button>
+                    <div class="mb-4">
+                        <label class="form-label">New Password</label>
+                        <input type="password" id="resetNewPassword" class="form-control" placeholder="Enter new password" required minlength="6">
+                    </div>
+                    <button type="submit" class="btn btn-theme w-100">Reset Password</button>
                     <div class="text-center mt-3">
                         <a onclick="showPage('login')" class="text-secondary" style="cursor:pointer;"><i class="fa-solid fa-arrow-left"></i> Back to Login</a>
                     </div>
@@ -439,7 +497,185 @@
             </div>
         </div>
 
+        <!-- 8. SELLER DASHBOARD -->
+        <div id="dashboard" class="page-view">
+            <div class="innerpage-banner">
+                <h2><i class="fa-solid fa-gauge-high me-2"></i>Seller Dashboard</h2>
+            </div>
+            <div class="container mt-5">
+                <!-- Welcome + Add House Button -->
+                <div class="d-flex justify-content-between align-items-center mb-4 flex-wrap gap-3">
+                    <div>
+                        <h3 class="fw-bold mb-1">Welcome, <span id="dashboardSellerName">Seller</span></h3>
+                        <p class="text-muted mb-0">Manage your property listings</p>
+                    </div>
+                    <button class="btn btn-theme btn-lg" data-bs-toggle="modal" data-bs-target="#addHouseModal">
+                        <i class="fa-solid fa-plus me-2"></i>Add House to Sell
+                    </button>
+                </div>
+
+                <!-- My Listings -->
+                <h4 class="border-bottom pb-2 mb-4">My Listed Properties</h4>
+                <div id="myListingsGrid" class="row g-4">
+                    <div class="col-12 text-center text-muted py-5" id="noListingsMsg">
+                        <i class="fa-solid fa-house-circle-xmark fa-3x mb-3 text-secondary"></i>
+                        <p>You haven't listed any properties yet. Click "Add House to Sell" to get started!</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
     </main>
+
+    <!-- ===== ADD HOUSE MODAL ===== -->
+    <div class="modal fade" id="addHouseModal" tabindex="-1" aria-labelledby="addHouseModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title" id="addHouseModalLabel"><i class="fa-solid fa-house-circle-check me-2"></i>List a New Property</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addHouseForm" enctype="multipart/form-data">
+                        <!-- Basic Info -->
+                        <h6 class="text-success border-bottom pb-2 mb-3"><i class="fa-solid fa-info-circle me-1"></i> Basic Info</h6>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Property Title *</label>
+                            <input type="text" id="houseTitle" class="form-control" placeholder="e.g., Beautiful Family Home" required>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Description</label>
+                            <textarea id="houseDescription" class="form-control" rows="3" placeholder="Describe this property..."></textarea>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Asking Price ($) *</label>
+                                <input type="number" id="housePrice" class="form-control" placeholder="e.g., 450000" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Year Built</label>
+                                <input type="number" id="houseYrBuilt" class="form-control" placeholder="e.g., 1995">
+                            </div>
+                        </div>
+
+                        <!-- Property Details -->
+                        <h6 class="text-success border-bottom pb-2 mb-3 mt-4"><i class="fa-solid fa-ruler-combined me-1"></i> Property Details</h6>
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <label class="form-label fw-bold">Bedrooms *</label>
+                                <input type="number" id="houseBedrooms" class="form-control" placeholder="3" required>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label fw-bold">Bathrooms *</label>
+                                <input type="number" step="0.5" id="houseBathrooms" class="form-control" placeholder="2" required>
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label fw-bold">Floors</label>
+                                <input type="number" step="0.5" id="houseFloors" class="form-control" placeholder="1">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Living Area (SqFt) *</label>
+                                <input type="number" id="houseSqftLiving" class="form-control" placeholder="e.g., 2000" required>
+                            </div>
+                            <div class="col-md-6">
+                                <label class="form-label fw-bold">Lot Size (SqFt)</label>
+                                <input type="number" id="houseSqftLot" class="form-control" placeholder="Optional">
+                            </div>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-4">
+                                <label class="form-label fw-bold">Condition (1-5)</label>
+                                <input type="number" min="1" max="5" id="houseCondition" class="form-control" value="3">
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label fw-bold">Grade (1-13)</label>
+                                <input type="number" min="1" max="13" id="houseGrade" class="form-control" value="7">
+                            </div>
+                            <div class="col-4">
+                                <label class="form-label fw-bold">View (0-4)</label>
+                                <input type="number" min="0" max="4" id="houseView" class="form-control" value="0">
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Year Renovated</label>
+                            <input type="number" id="houseYrRenovated" class="form-control" placeholder="0 if never renovated">
+                        </div>
+
+                        <!-- Location -->
+                        <h6 class="text-success border-bottom pb-2 mb-3 mt-4"><i class="fa-solid fa-location-dot me-1"></i> Location</h6>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Street Address *</label>
+                            <input type="text" id="houseAddress" class="form-control" placeholder="Full street address" required>
+                        </div>
+                        <div class="row mb-3">
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">City</label>
+                                <input type="text" id="houseCity" class="form-control" placeholder="Seattle">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">State</label>
+                                <input type="text" id="houseState" class="form-control" placeholder="WA">
+                            </div>
+                            <div class="col-md-4">
+                                <label class="form-label fw-bold">Zipcode</label>
+                                <input type="text" id="houseZipcode" class="form-control" placeholder="98101">
+                            </div>
+                        </div>
+
+                        <!-- Amenities -->
+                        <h6 class="text-success border-bottom pb-2 mb-3 mt-4"><i class="fa-solid fa-star me-1"></i> Amenities</h6>
+                        <div class="row mb-3">
+                            <div class="col-6 col-md-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="houseWaterfront">
+                                    <label class="form-check-label" for="houseWaterfront">Waterfront</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="houseParking">
+                                    <label class="form-check-label" for="houseParking">Parking</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="houseGarden">
+                                    <label class="form-check-label" for="houseGarden">Garden</label>
+                                </div>
+                            </div>
+                            <div class="col-6 col-md-3">
+                                <div class="form-check">
+                                    <input class="form-check-input" type="checkbox" id="housePool">
+                                    <label class="form-check-label" for="housePool">Pool</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-check mb-3">
+                            <input class="form-check-input" type="checkbox" id="houseFurnished">
+                            <label class="form-check-label" for="houseFurnished">Fully Furnished</label>
+                        </div>
+
+                        <!-- Images -->
+                        <h6 class="text-success border-bottom pb-2 mb-3 mt-4"><i class="fa-solid fa-images me-1"></i> Photos</h6>
+                        <div class="mb-3">
+                            <label class="form-label fw-bold">Upload Property Images</label>
+                            <input type="file" id="houseImages" class="form-control" multiple accept="image/png,image/jpeg,image/webp">
+                            <div class="form-text">You can select multiple images (jpg, png, webp)</div>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="button" class="btn btn-theme" id="submitHouseBtn">
+                        <span id="submitHouseText">Submit Listing</span>
+                        <span id="submitHouseSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- ************************************************* Footer ************************************************* -->
     <footer>
@@ -489,9 +725,16 @@
             document.getElementById(pageId).classList.add('active-page');
             
             // Update active nav link
-            document.querySelectorAll('.menu-ul a').forEach(el => el.classList.remove('active'));
+            document.querySelectorAll('#mainNavbar .nav-link').forEach(el => el.classList.remove('active'));
             const navLink = document.getElementById('nav-' + pageId);
             if(navLink) navLink.classList.add('active');
+
+            // Close mobile hamburger menu after navigation
+            const navCollapse = document.getElementById('mainNavbar');
+            if (navCollapse && navCollapse.classList.contains('show')) {
+                const bsCollapse = bootstrap.Collapse.getInstance(navCollapse);
+                if (bsCollapse) bsCollapse.hide();
+            }
 
             // Scroll to top smoothly
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -522,29 +765,52 @@
                         locationStatus.classList.remove('d-none');
                     },
                     (error) => {
-                        alert("Could not get location. Make sure location permissions are enabled.");
+                        showToast("Could not get location. Make sure location permissions are enabled.", "error");
                         getLocationBtn.innerHTML = '<i class="fa-solid fa-crosshairs"></i> Use My Current Location';
                     }
                 );
             } else {
-                alert("Geolocation is not supported by your browser.");
+                showToast("Geolocation is not supported by your browser.", "error");
             }
         });
 
         // ===============================
-// AUTHENTICATION SYSTEM
+// AUTHENTICATION SYSTEM (JWT)
 // ===============================
 
-// ---------- REGISTER ----------
+// --- JWT Helper Functions ---
+function getToken() {
+    return localStorage.getItem("jwt_token");
+}
+
+function setToken(token) {
+    localStorage.setItem("jwt_token", token);
+}
+
+function clearAuth() {
+    localStorage.removeItem("jwt_token");
+    localStorage.removeItem("user");
+}
+
+function handleUnauthorized() {
+    clearAuth();
+    showToast("Session expired. Please login again.", "warning");
+    logoutUser();
+    showPage("login");
+}
+
+// ---------- REGISTER (Seller with Phone + Address) ----------
 document.getElementById("registerForm")?.addEventListener("submit", async function (e) {
     e.preventDefault();
 
     const username = document.getElementById("registerUsername").value.trim();
     const email = document.getElementById("registerEmail").value.trim();
+    const phone = document.getElementById("registerPhone").value.trim();
+    const address = document.getElementById("registerAddress").value.trim();
     const password = document.getElementById("registerPassword").value.trim();
 
-    if (!username || !email || !password) {
-        alert("All fields are required.");
+    if (!username || !email || !phone || !address || !password) {
+        showToast("All fields are required.", "error");
         return;
     }
 
@@ -552,27 +818,27 @@ document.getElementById("registerForm")?.addEventListener("submit", async functi
         const response = await fetch(`${BASE_URL}/api/register`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, email, password })
+            body: JSON.stringify({ username, email, password, phone, address })
         });
 
         const data = await response.json();
 
         if (response.ok && data.status === "success") {
-            alert("Registration successful. Please login.");
+            showToast("Seller account created successfully! Please login.", "success");
             showPage("login");
             document.getElementById("registerForm").reset();
         } else {
-            alert(data.error || "Registration failed.");
+            showToast(data.error || "Registration failed.", "error");
         }
 
     } catch (error) {
         console.error("Register Error:", error);
-        alert("Server connection failed.");
+        showToast("Server connection failed.", "error");
     }
 });
 
 
-// ---------- LOGIN ----------
+// ---------- LOGIN (stores JWT token) ----------
 document.getElementById("loginForm")?.addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -580,7 +846,7 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
     const password = document.getElementById("loginPassword").value.trim();
 
     if (!email || !password) {
-        alert("Email and password required.");
+        showToast("Email and password required.", "error");
         return;
     }
 
@@ -595,22 +861,60 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
 
         if (response.ok && data.status === "success") {
 
-            // Save user locally
+            // Save user info and JWT token
             localStorage.setItem("user", JSON.stringify(data.user));
+            setToken(data.token);
 
             updateNavbarAfterLogin(data.user.username);
 
-            alert("Login successful.");
-            showPage("home");
+            showToast(`Welcome back, ${data.user.username}!`, "success");
+            showPage("dashboard");
+            loadMyListings();
             document.getElementById("loginForm").reset();
 
         } else {
-            alert(data.error || "Invalid credentials.");
+            showToast(data.error || "Invalid credentials.", "error");
         }
 
     } catch (error) {
         console.error("Login Error:", error);
-        alert("Server connection failed.");
+        showToast("Server connection failed.", "error");
+    }
+});
+
+
+// ---------- RESET PASSWORD (calls real API) ----------
+document.getElementById("resetPasswordForm")?.addEventListener("submit", async function (e) {
+    e.preventDefault();
+
+    const email = document.getElementById("resetEmail").value.trim();
+    const newPassword = document.getElementById("resetNewPassword").value.trim();
+
+    if (!email || !newPassword) {
+        showToast("All fields are required.", "error");
+        return;
+    }
+
+    try {
+        const response = await fetch(`${BASE_URL}/api/reset-password`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ email, new_password: newPassword })
+        });
+
+        const data = await response.json();
+
+        if (response.ok && data.status === "success") {
+            showToast("Password updated successfully! Please login with your new password.", "success");
+            showPage("login");
+            document.getElementById("resetPasswordForm").reset();
+        } else {
+            showToast(data.error || "Password reset failed.", "error");
+        }
+
+    } catch (error) {
+        console.error("Reset Password Error:", error);
+        showToast("Server connection failed.", "error");
     }
 });
 
@@ -619,6 +923,7 @@ document.getElementById("loginForm")?.addEventListener("submit", async function 
 function updateNavbarAfterLogin(username) {
     const loginLink = document.getElementById("nav-login");
     const registerLink = document.getElementById("nav-register");
+    const dashboardLi = document.getElementById("nav-dashboard-li");
 
     if (loginLink) {
         loginLink.innerText = `Hi, ${username}`;
@@ -631,20 +936,31 @@ function updateNavbarAfterLogin(username) {
         registerLink.classList.remove("btn-theme");
         registerLink.onclick = logoutUser;
     }
+
+    // Show dashboard nav link
+    if (dashboardLi) dashboardLi.classList.remove("d-none");
+
+    // Update dashboard welcome name
+    const dashName = document.getElementById("dashboardSellerName");
+    if (dashName) dashName.innerText = username;
 }
 
 
 function logoutUser() {
-    localStorage.removeItem("user");
+    clearAuth();
 
     document.getElementById("nav-login").innerText = "Login";
     document.getElementById("nav-login").onclick = () => showPage("login");
     document.getElementById("nav-login").style.cursor = "pointer";
 
     const registerLink = document.getElementById("nav-register");
-    registerLink.innerText = "Register";
+    registerLink.innerText = "Seller Register";
     registerLink.classList.add("btn-theme");
     registerLink.onclick = () => showPage("register");
+
+    // Hide dashboard nav link
+    const dashboardLi = document.getElementById("nav-dashboard-li");
+    if (dashboardLi) dashboardLi.classList.add("d-none");
 
     showPage("home");
 }
@@ -652,14 +968,200 @@ function logoutUser() {
 // ---------- CHECK SESSION ON PAGE LOAD ----------
 window.addEventListener("DOMContentLoaded", () => {
     const user = JSON.parse(localStorage.getItem("user"));
-    if (user) {
+    const token = getToken();
+    if (user && token) {
         updateNavbarAfterLogin(user.username);
+        loadMyListings();
+    } else {
+        clearAuth();
     }
 });
 
-        // --- FORM SUBMISSION & API FETCH ---
+// ===============================
+// SELLER DASHBOARD - HOUSE LISTINGS
+// ===============================
+
+// ---------- SUBMIT NEW HOUSE LISTING ----------
+document.getElementById("submitHouseBtn")?.addEventListener("click", async function () {
+    const token = getToken();
+    if (!token) {
+        showToast("Please login first.", "error");
+        showPage("login");
+        return;
+    }
+
+    // Validate required fields
+    const title = document.getElementById("houseTitle").value.trim();
+    const price = document.getElementById("housePrice").value;
+    const bedrooms = document.getElementById("houseBedrooms").value;
+    const bathrooms = document.getElementById("houseBathrooms").value;
+    const sqftLiving = document.getElementById("houseSqftLiving").value;
+    const address = document.getElementById("houseAddress").value.trim();
+
+    if (!title || !price || !bedrooms || !bathrooms || !sqftLiving || !address) {
+        showToast("Please fill in all required fields (marked with *).", "error");
+        return;
+    }
+
+    // Show spinner
+    document.getElementById("submitHouseText").classList.add("d-none");
+    document.getElementById("submitHouseSpinner").classList.remove("d-none");
+
+    // Build FormData for multipart upload (supports images)
+    const formData = new FormData();
+    formData.append("title", title);
+    formData.append("description", document.getElementById("houseDescription").value.trim());
+    formData.append("price", price);
+    formData.append("bedrooms", bedrooms);
+    formData.append("bathrooms", bathrooms);
+    formData.append("sqft_living", sqftLiving);
+    formData.append("address", address);
+
+    // Optional fields
+    const sqftLot = document.getElementById("houseSqftLot").value;
+    if (sqftLot) formData.append("sqft_lot", sqftLot);
+    const floors = document.getElementById("houseFloors").value;
+    if (floors) formData.append("floors", floors);
+    const yrBuilt = document.getElementById("houseYrBuilt").value;
+    if (yrBuilt) formData.append("yr_built", yrBuilt);
+    const yrRenovated = document.getElementById("houseYrRenovated").value;
+    if (yrRenovated) formData.append("yr_renovated", yrRenovated);
+    const city = document.getElementById("houseCity").value.trim();
+    if (city) formData.append("city", city);
+    const state = document.getElementById("houseState").value.trim();
+    if (state) formData.append("state", state);
+    const zipcode = document.getElementById("houseZipcode").value.trim();
+    if (zipcode) formData.append("zipcode", zipcode);
+
+    formData.append("condition", document.getElementById("houseCondition").value || 3);
+    formData.append("grade", document.getElementById("houseGrade").value || 7);
+    formData.append("view", document.getElementById("houseView").value || 0);
+    formData.append("waterfront", document.getElementById("houseWaterfront").checked ? 1 : 0);
+    formData.append("parking", document.getElementById("houseParking").checked ? 1 : 0);
+    formData.append("garden", document.getElementById("houseGarden").checked ? 1 : 0);
+    formData.append("pool", document.getElementById("housePool").checked ? 1 : 0);
+    formData.append("furnished", document.getElementById("houseFurnished").checked ? 1 : 0);
+
+    // Attach images
+    const imageFiles = document.getElementById("houseImages").files;
+    for (let i = 0; i < imageFiles.length; i++) {
+        formData.append("images", imageFiles[i]);
+    }
+
+    try {
+        const response = await fetch(`${BASE_URL}/api/houses`, {
+            method: "POST",
+            headers: { "Authorization": `Bearer ${token}` },
+            body: formData
+        });
+
+        if (response.status === 401) { handleUnauthorized(); return; }
+
+        const data = await response.json();
+
+        if (response.ok && data.status === "success") {
+            showToast("Property listed successfully!", "success");
+            // Close modal and reset form
+            const modal = bootstrap.Modal.getInstance(document.getElementById("addHouseModal"));
+            if (modal) modal.hide();
+            document.getElementById("addHouseForm").reset();
+            // Refresh listings
+            loadMyListings();
+        } else {
+            showToast(data.error || "Failed to list property.", "error");
+        }
+
+    } catch (error) {
+        console.error("Add House Error:", error);
+        showToast("Server connection failed.", "error");
+    } finally {
+        document.getElementById("submitHouseText").classList.remove("d-none");
+        document.getElementById("submitHouseSpinner").classList.add("d-none");
+    }
+});
+
+// ---------- LOAD MY LISTINGS ----------
+async function loadMyListings() {
+    const token = getToken();
+    if (!token) return;
+
+    try {
+        const response = await fetch(`${BASE_URL}/api/my-houses`, {
+            headers: { "Authorization": `Bearer ${token}` }
+        });
+
+        if (response.status === 401) return;
+
+        const data = await response.json();
+
+        if (data.status === "success") {
+            const grid = document.getElementById("myListingsGrid");
+            const noMsg = document.getElementById("noListingsMsg");
+
+            if (data.houses.length === 0) {
+                if (noMsg) noMsg.style.display = "block";
+                return;
+            }
+
+            // Clear grid
+            grid.innerHTML = "";
+
+            data.houses.forEach(house => {
+                const imgSrc = (house.images && house.images.length > 0)
+                    ? `${BASE_URL}/uploads/${house.images[0]}`
+                    : "https://via.placeholder.com/400x250?text=No+Image";
+
+                const priceFormatted = new Intl.NumberFormat('en-US', {
+                    style: 'currency', currency: 'USD', maximumFractionDigits: 0
+                }).format(house.price);
+
+                const amenities = [];
+                if (house.waterfront) amenities.push("Waterfront");
+                if (house.parking) amenities.push("Parking");
+                if (house.garden) amenities.push("Garden");
+                if (house.pool) amenities.push("Pool");
+                if (house.furnished) amenities.push("Furnished");
+
+                const card = `
+                    <div class="col-md-6 col-lg-4">
+                        <div class="card h-100 shadow-sm border-0">
+                            <img src="${imgSrc}" class="card-img-top" alt="${house.title}" style="height:200px; object-fit:cover;" onerror="this.src='https://via.placeholder.com/400x250?text=No+Image'">
+                            <div class="card-body">
+                                <h5 class="card-title text-success fw-bold">${priceFormatted}</h5>
+                                <h6 class="card-subtitle mb-2">${house.title}</h6>
+                                <p class="text-muted small mb-2"><i class="fa-solid fa-location-dot"></i> ${house.address}${house.city ? ', ' + house.city : ''}</p>
+                                <div class="d-flex gap-3 text-muted small mb-2">
+                                    <span><i class="fa-solid fa-bed"></i> ${house.bedrooms} Beds</span>
+                                    <span><i class="fa-solid fa-bath"></i> ${house.bathrooms} Baths</span>
+                                    <span><i class="fa-solid fa-maximize"></i> ${house.sqft_living} SqFt</span>
+                                </div>
+                                ${amenities.length > 0 ? `<div class="mt-2">${amenities.map(a => `<span class="badge bg-light text-dark me-1 mb-1">${a}</span>`).join('')}</div>` : ''}
+                            </div>
+                            <div class="card-footer bg-transparent small text-muted">
+                                Listed on ${new Date(house.created_at).toLocaleDateString()}
+                            </div>
+                        </div>
+                    </div>`;
+
+                grid.innerHTML += card;
+            });
+        }
+    } catch (error) {
+        console.error("Load listings error:", error);
+    }
+}
+
+        // --- FORM SUBMISSION & API FETCH (with JWT) ---
         document.getElementById('predictionForm').addEventListener('submit', async (e) => {
             e.preventDefault();
+
+            // Check if user is logged in
+            const token = getToken();
+            if (!token) {
+                showToast("Please login first to use the price predictor.", "warning");
+                showPage("login");
+                return;
+            }
             
             // UI States
             const spinner = document.getElementById('loadingSpinner');
@@ -679,25 +1181,31 @@ window.addEventListener("DOMContentLoaded", () => {
                 condition: parseInt(document.getElementById('condition').value),
                 grade: parseInt(document.getElementById('grade').value),
                 yr_built: parseInt(document.getElementById('yr_built').value),
-                yr_renovated: 0, // Defaults to 0 if not specified
+                yr_renovated: 0,
                 lat: latInput.value ? parseFloat(latInput.value) : null,
                 long: longInput.value ? parseFloat(longInput.value) : null,
             };
 
             try {
-                // Send to Python Flask/FastAPI Backend
                 const response = await fetch(`${BASE_URL}/predict`, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
+                    headers: { 
+                        'Content-Type': 'application/json',
+                        'Authorization': `Bearer ${token}`
+                    },
                     body: JSON.stringify(payload)
                 });
+
+                if (response.status === 401) {
+                    handleUnauthorized();
+                    return;
+                }
 
                 if (!response.ok) throw new Error("Network response was not ok");
                 
                 const data = await response.json();
 
                 if (data.status === "success") {
-                    // Format currency
                     const formattedPrice = new Intl.NumberFormat('en-US', {
                         style: 'currency',
                         currency: 'USD',
@@ -706,25 +1214,53 @@ window.addEventListener("DOMContentLoaded", () => {
 
                     document.getElementById('priceDisplay').innerText = formattedPrice;
                     
-                    // Show which location method was used
                     const locText = latInput.value 
                         ? "Calculated using your precise GPS coordinates." 
                         : "Calculated using your network IP approximate location.";
                     document.getElementById('locationUsedInfo').innerText = locText;
 
-                    // Show Result Box
                     resultBox.classList.remove('d-none');
                 } else {
-                    alert("Error from server: " + data.error);
+                    showToast("Error from server: " + data.error, "error");
                 }
 
             } catch (error) {
                 console.error('Error:', error);
-                alert("Failed to connect to the backend. Is your Flask/FastAPI server running at " + BASE_URL + "?");
+                showToast("Failed to connect to the backend. Is your Flask server running?", "error");
             } finally {
                 spinner.classList.add('d-none');
             }
         });
+
+// ===============================
+// TOAST NOTIFICATION SYSTEM
+// ===============================
+function showToast(message, type = "success") {
+    const container = document.getElementById("toastContainer");
+    const toast = document.createElement("div");
+    toast.className = `toast-msg toast-${type}`;
+
+    const icons = {
+        success: '<i class="fa-solid fa-circle-check toast-icon"></i>',
+        error: '<i class="fa-solid fa-circle-xmark toast-icon"></i>',
+        warning: '<i class="fa-solid fa-triangle-exclamation toast-icon"></i>'
+    };
+
+    toast.innerHTML = `
+        ${icons[type] || icons.success}
+        <span class="toast-text">${message}</span>
+        <button class="toast-close" onclick="this.parentElement.classList.add('toast-exit'); setTimeout(() => this.parentElement.remove(), 400)">&times;</button>
+    `;
+
+    container.appendChild(toast);
+
+    // Auto-remove after 4 seconds
+    setTimeout(() => {
+        toast.classList.add("toast-exit");
+        setTimeout(() => toast.remove(), 400);
+    }, 4000);
+}
+
     </script>
 </body>
 </html>
