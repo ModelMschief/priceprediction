@@ -1,14 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Smart Dwellings</title>
     <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet"
+        crossorigin="anonymous">
     <!-- FontAwesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    
+
     <!-- Custom Styles Bundled -->
     <style>
         body {
@@ -29,68 +31,235 @@
             top: 0;
             z-index: 1000;
         }
-        header .header-div .row { align-items: center; }
-        header .logo-div img { width: 100%; max-width: 180px; cursor: pointer;}
-        header .menu-ul { display: flex; list-style: none; margin: 0; padding: 0; justify-content: flex-end;}
-        header .menu-ul li { color: white; padding: 0 15px; font-weight: 500;}
-        header .menu-ul li a { color: #fff; text-decoration: none; cursor: pointer; transition: 0.3s;}
-        header .menu-ul li a:hover, header .menu-ul li a.active { color: #16a34a; }
+
+        header .header-div .row {
+            align-items: center;
+        }
+
+        header .logo-div img {
+            width: 100%;
+            max-width: 180px;
+            cursor: pointer;
+        }
+
+        header .menu-ul {
+            display: flex;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            justify-content: flex-end;
+        }
+
+        header .menu-ul li {
+            color: white;
+            padding: 0 15px;
+            font-weight: 500;
+        }
+
+        header .menu-ul li a {
+            color: #fff;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        header .menu-ul li a:hover,
+        header .menu-ul li a.active {
+            color: #16a34a;
+        }
 
         /* --- Footer Styles --- */
-        footer { background: #000; color: #fff; padding: 50px 0 20px 0; margin-top: 50px;}
-        footer .logo-div img { width: 90%; max-width: 200px; margin-bottom: 20px;}
-        footer p, footer h6 { color: #978383; }
-        footer ul { list-style: none; padding: 0; }
-        footer li { color: #978383; margin-bottom: 10px; cursor: pointer; transition: 0.3s;}
-        footer li:hover { color: #fff; }
-        footer a { color: #978383; text-decoration: none; }
-        footer a:hover { color: #16a34a; }
+        footer {
+            background: #000;
+            color: #fff;
+            padding: 50px 0 20px 0;
+            margin-top: 50px;
+        }
+
+        footer .logo-div img {
+            width: 90%;
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+
+        footer p,
+        footer h6 {
+            color: #978383;
+        }
+
+        footer ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        footer li {
+            color: #978383;
+            margin-bottom: 10px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        footer li:hover {
+            color: #fff;
+        }
+
+        footer a {
+            color: #978383;
+            text-decoration: none;
+        }
+
+        footer a:hover {
+            color: #16a34a;
+        }
 
         /* --- SPA View Management --- */
-        .page-view { display: none; min-height: 70vh; animation: fadeIn 0.4s; }
-        .page-view.active-page { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        .page-view {
+            display: none;
+            min-height: 70vh;
+            animation: fadeIn 0.4s;
+        }
+
+        .page-view.active-page {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
         /* --- Custom Sections & Components --- */
-       .hero-banner {
-    background: 
-        linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
-        url('assets/images/banner-image.jpg') no-repeat center center;
-    background-size: cover;
-    color: white;
-    padding: 120px 0;
-    text-align: center;
-}
+        .hero-banner {
+            background:
+                linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
+                url('assets/images/banner-image.jpg') no-repeat center center;
+            background-size: cover;
+            color: white;
+            padding: 120px 0;
+            text-align: center;
+        }
+
         .innerpage-banner {
             padding: 60px 0;
             background: #1c0f2e;
             color: white;
             text-align: center;
         }
-        
+
         /* Top Recommendations */
-        .top-recomentations { padding: 50px 0; }
-        .top-recomentations h2 { padding-bottom: 20px; font-weight: bold;}
-        .top-recomentations .card { border: none; box-shadow: 0 5px 15px rgba(0,0,0,0.05); transition: transform 0.3s; margin-bottom: 20px;}
-        .top-recomentations .card:hover { transform: translateY(-5px); }
-        .top-recomentations .card-body { text-align: center; padding: 25px;}
-        .top-recomentations .card-title { font-size: 22px; color: #16a34a; font-weight: bold;}
-        .top-recomentations .specifications ul { display: flex; justify-content: space-evenly; list-style: none; padding: 0; margin: 15px 0; color: #555;}
-        .view-details { border: none; background-color: #16a34a; color: #fff; padding: 8px 20px; border-radius: 5px; font-weight: 500; transition: 0.3s;}
-        .view-details:hover { background-color: #F4C430; color: #000; }
+        .top-recomentations {
+            padding: 50px 0;
+        }
+
+        .top-recomentations h2 {
+            padding-bottom: 20px;
+            font-weight: bold;
+        }
+
+        .top-recomentations .card {
+            border: none;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+            transition: transform 0.3s;
+            margin-bottom: 20px;
+        }
+
+        .top-recomentations .card:hover {
+            transform: translateY(-5px);
+        }
+
+        .top-recomentations .card-body {
+            text-align: center;
+            padding: 25px;
+        }
+
+        .top-recomentations .card-title {
+            font-size: 22px;
+            color: #16a34a;
+            font-weight: bold;
+        }
+
+        .top-recomentations .specifications ul {
+            display: flex;
+            justify-content: space-evenly;
+            list-style: none;
+            padding: 0;
+            margin: 15px 0;
+            color: #555;
+        }
+
+        .view-details {
+            border: none;
+            background-color: #16a34a;
+            color: #fff;
+            padding: 8px 20px;
+            border-radius: 5px;
+            font-weight: 500;
+            transition: 0.3s;
+        }
+
+        .view-details:hover {
+            background-color: #F4C430;
+            color: #000;
+        }
 
         /* Forms */
         .form-container {
-            max-width: 450px; margin: 50px auto; padding: 40px; 
-            background: #fff; border-radius: 10px; box-shadow: 0 10px 25px rgba(0,0,0,0.05);
+            max-width: 450px;
+            margin: 50px auto;
+            padding: 40px;
+            background: #fff;
+            border-radius: 10px;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
         }
-        .login-form .reset_login, .register-form .reset_login { display: flex; justify-content: space-between; padding-top: 20px; font-size: 14px;}
-        .btn-theme { background-color: #16a34a; color: white; border: none; padding: 10px; border-radius: 5px; font-weight: bold;}
-        .btn-theme:hover { background-color: #15803d; color: white;}
-        
+
+        .login-form .reset_login,
+        .register-form .reset_login {
+            display: flex;
+            justify-content: space-between;
+            padding-top: 20px;
+            font-size: 14px;
+        }
+
+        .btn-theme {
+            background-color: #16a34a;
+            color: white;
+            border: none;
+            padding: 10px;
+            border-radius: 5px;
+            font-weight: bold;
+        }
+
+        .btn-theme:hover {
+            background-color: #15803d;
+            color: white;
+        }
+
         /* Predictor Specific Styles */
-        .predict-wrapper { max-width: 900px; margin: 50px auto; background: #fff; padding: 40px; border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.08); }
-        .result-box { background-color: #f0fdf4; border: 1px solid #bbf7d0; border-radius: 10px; padding: 30px; margin-top: 30px; text-align: center; transition: all 0.5s ease; }
+        .predict-wrapper {
+            max-width: 900px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+        }
+
+        .result-box {
+            background-color: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 30px;
+            text-align: center;
+            transition: all 0.5s ease;
+        }
 
         /* Toast Notification System */
         .toast-container {
@@ -103,6 +272,7 @@
             gap: 10px;
             pointer-events: none;
         }
+
         .toast-msg {
             pointer-events: auto;
             min-width: 300px;
@@ -115,28 +285,67 @@
             display: flex;
             align-items: center;
             gap: 10px;
-            box-shadow: 0 8px 24px rgba(0,0,0,0.18);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.18);
             animation: toastSlideIn 0.4s ease;
             opacity: 1;
             transition: opacity 0.4s ease, transform 0.4s ease;
         }
-        .toast-msg.toast-success { background: linear-gradient(135deg, #16a34a, #22c55e); }
-        .toast-msg.toast-error { background: linear-gradient(135deg, #dc2626, #ef4444); }
-        .toast-msg.toast-warning { background: linear-gradient(135deg, #d97706, #f59e0b); }
-        .toast-msg .toast-icon { font-size: 20px; flex-shrink: 0; }
-        .toast-msg .toast-text { flex: 1; line-height: 1.4; }
-        .toast-msg .toast-close {
-            background: none; border: none; color: rgba(255,255,255,0.7); font-size: 18px;
-            cursor: pointer; padding: 0; flex-shrink: 0;
+
+        .toast-msg.toast-success {
+            background: linear-gradient(135deg, #16a34a, #22c55e);
         }
-        .toast-msg .toast-close:hover { color: #fff; }
-        .toast-msg.toast-exit { opacity: 0; transform: translateX(80px); }
+
+        .toast-msg.toast-error {
+            background: linear-gradient(135deg, #dc2626, #ef4444);
+        }
+
+        .toast-msg.toast-warning {
+            background: linear-gradient(135deg, #d97706, #f59e0b);
+        }
+
+        .toast-msg .toast-icon {
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        .toast-msg .toast-text {
+            flex: 1;
+            line-height: 1.4;
+        }
+
+        .toast-msg .toast-close {
+            background: none;
+            border: none;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 18px;
+            cursor: pointer;
+            padding: 0;
+            flex-shrink: 0;
+        }
+
+        .toast-msg .toast-close:hover {
+            color: #fff;
+        }
+
+        .toast-msg.toast-exit {
+            opacity: 0;
+            transform: translateX(80px);
+        }
+
         @keyframes toastSlideIn {
-            from { opacity: 0; transform: translateX(80px); }
-            to { opacity: 1; transform: translateX(0); }
+            from {
+                opacity: 0;
+                transform: translateX(80px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
         }
     </style>
 </head>
+
 <body>
 
     <!-- Toast Notification Container -->
@@ -148,19 +357,29 @@
             <div class="container">
                 <nav class="navbar navbar-expand-lg navbar-dark p-0">
                     <div class="logo-div" onclick="showPage('home')" style="cursor:pointer;">
-                        <img src="assets/images/logo-final.png" alt="Smart Dwellings" onerror="this.src='https://via.placeholder.com/200x60?text=Smart+Dwellings'">
+                        <img src="assets/images/logo-final.png" alt="Smart Dwellings"
+                            onerror="this.src='https://via.placeholder.com/200x60?text=Smart+Dwellings'">
                     </div>
-                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar" aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
+                    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#mainNavbar"
+                        aria-controls="mainNavbar" aria-expanded="false" aria-label="Toggle navigation">
                         <span class="navbar-toggler-icon"></span>
                     </button>
                     <div class="collapse navbar-collapse justify-content-end" id="mainNavbar">
                         <ul class="navbar-nav align-items-lg-center gap-lg-3 gap-2 mt-3 mt-lg-0">
-                            <li class="nav-item"><a class="nav-link active" onclick="showPage('home')" id="nav-home" style="cursor:pointer;">Home</a></li>
-                            <li class="nav-item"><a class="nav-link" onclick="showPage('price-predict')" id="nav-price-predict" style="cursor:pointer;">Price Predict</a></li>
-                            <li class="nav-item"><a class="nav-link" onclick="showPage('place-predict')" id="nav-place-predict" style="cursor:pointer;">Place Predict</a></li>
-                            <li class="nav-item d-none" id="nav-dashboard-li"><a class="nav-link" onclick="showPage('dashboard')" id="nav-dashboard" style="cursor:pointer;">Dashboard</a></li>
-                            <li class="nav-item"><a class="nav-link" onclick="showPage('login')" id="nav-login" style="cursor:pointer;">Login</a></li>
-                            <li class="nav-item"><a class="nav-link btn btn-theme text-white px-3 py-1" onclick="showPage('register')" id="nav-register" style="cursor:pointer;">Seller Register</a></li>
+                            <li class="nav-item"><a class="nav-link active" onclick="showPage('home')" id="nav-home"
+                                    style="cursor:pointer;">Home</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showPage('price-predict')"
+                                    id="nav-price-predict" style="cursor:pointer;">Price Predict</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showPage('place-predict')"
+                                    id="nav-place-predict" style="cursor:pointer;">Search House By Place</a></li>
+                            <li class="nav-item d-none" id="nav-dashboard-li"><a class="nav-link"
+                                    onclick="showPage('dashboard')" id="nav-dashboard"
+                                    style="cursor:pointer;">Dashboard</a></li>
+                            <li class="nav-item"><a class="nav-link" onclick="showPage('login')" id="nav-login"
+                                    style="cursor:pointer;">Login</a></li>
+                            <li class="nav-item"><a class="nav-link btn btn-theme text-white px-3 py-1"
+                                    onclick="showPage('register')" id="nav-register" style="cursor:pointer;">Seller
+                                    Register</a></li>
                         </ul>
                     </div>
                 </nav>
@@ -176,7 +395,8 @@
             <section class="hero-banner">
                 <div class="container">
                     <h1 class="display-4 fw-bold mb-4">Find Your Dream Home with AI</h1>
-                    <p class="lead mb-5">Predict real estate prices and discover the best places to live using cutting-edge Machine Learning.</p>
+                    <p class="lead mb-5">Predict real estate prices and discover the best places to live using
+                        cutting-edge Machine Learning.</p>
                     <button class="btn btn-theme btn-lg mx-2" onclick="showPage('price-predict')">Predict Price</button>
                     <button class="btn btn-light btn-lg mx-2" onclick="showPage('place-predict')">Find a Place</button>
                 </div>
@@ -184,59 +404,10 @@
 
             <section class="top-recomentations container">
                 <h2 class="text-center">Top Recommendations</h2>
-                <div class="row mt-5">
-                    <!-- Property Card 1 -->
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img src="assets/images/property-1.jpg" class="card-img-top" alt="Cozy Village Cottage" onerror="this.src='https://via.placeholder.com/400x250?text=Property+Image'">
-                            <div class="card-body">
-                                <h5 class="card-title">Cozy Village Cottage</h5>
-                                <p class="text-muted"><i class="fa-solid fa-location-dot"></i> Seattle Suburbs</p>
-                                <div class="specifications">
-                                    <ul>
-                                        <li><i class="fa-solid fa-bed"></i> 3 Beds</li>
-                                        <li><i class="fa-solid fa-bath"></i> 2 Baths</li>
-                                        <li><i class="fa-solid fa-maximize"></i> 1800 SqFt</li>
-                                    </ul>
-                                </div>
-                                <button class="view-details w-100" onclick="showPage('cozy-village-cottage')">View Details</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Property Card 2 -->
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img src="assets/images/property-2.jpg" class="card-img-top" alt="Modern Downtown Condo" onerror="this.src='https://via.placeholder.com/400x250?text=Property+Image'">
-                            <div class="card-body">
-                                <h5 class="card-title">Modern Downtown Condo</h5>
-                                <p class="text-muted"><i class="fa-solid fa-location-dot"></i> King County Metro</p>
-                                <div class="specifications">
-                                    <ul>
-                                        <li><i class="fa-solid fa-bed"></i> 2 Beds</li>
-                                        <li><i class="fa-solid fa-bath"></i> 2 Baths</li>
-                                        <li><i class="fa-solid fa-maximize"></i> 1200 SqFt</li>
-                                    </ul>
-                                </div>
-                                <button class="view-details w-100" onclick="showPage('cozy-village-cottage')">View Details</button>
-                            </div>
-                        </div>
-                    </div>
-                    <!-- Property Card 3 -->
-                    <div class="col-md-4">
-                        <div class="card">
-                            <img src="assets/images/property-3.jpg" class="card-img-top" alt="Waterfront Estate" onerror="this.src='https://via.placeholder.com/400x250?text=Property+Image'">
-                            <div class="card-body">
-                                <h5 class="card-title">Lakefront Estate</h5>
-                                <p class="text-muted"><i class="fa-solid fa-location-dot"></i> Bellevue Area</p>
-                                <div class="specifications">
-                                    <ul>
-                                        <li><i class="fa-solid fa-bed"></i> 5 Beds</li>
-                                        <li><i class="fa-solid fa-bath"></i> 4 Baths</li>
-                                        <li><i class="fa-solid fa-maximize"></i> 4500 SqFt</li>
-                                    </ul>
-                                </div>
-                                <button class="view-details w-100" onclick="showPage('cozy-village-cottage')">View Details</button>
-                            </div>
+                <div class="row mt-5" id="recommendationsGrid">
+                    <div class="col-12 text-center text-muted">
+                        <div class="spinner-border text-success" role="status">
+                             <span class="visually-hidden">Loading recommendations...</span>
                         </div>
                     </div>
                 </div>
@@ -261,8 +432,10 @@
                     </div>
                     <button type="submit" class="btn btn-theme w-100 mt-3">Login</button>
                     <div class="reset_login">
-                        <a onclick="showPage('reset-password')" class="text-success" style="cursor:pointer;">Forgot Password?</a>
-                        <a onclick="showPage('register')" class="text-secondary" style="cursor:pointer;">Create Account</a>
+                        <a onclick="showPage('reset-password')" class="text-success" style="cursor:pointer;">Forgot
+                            Password?</a>
+                        <a onclick="showPage('register')" class="text-secondary" style="cursor:pointer;">Create
+                            Account</a>
                     </div>
                 </form>
             </div>
@@ -275,32 +448,39 @@
             </div>
             <div class="form-container register-form">
                 <h3 class="text-center mb-2">Become a Seller</h3>
-                <p class="text-center text-muted mb-4 small">Create your seller account to list properties on Smart Dwellings.</p>
+                <p class="text-center text-muted mb-4 small">Create your seller account to list properties on Smart
+                    Dwellings.</p>
                 <form id="registerForm">
                     <div class="mb-3">
                         <label class="form-label">Full Name</label>
-                        <input type="text" id="registerUsername" class="form-control" placeholder="Your full name" required>
+                        <input type="text" id="registerUsername" class="form-control" placeholder="Your full name"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input type="email" id="registerEmail" class="form-control" placeholder="seller@example.com" required>
+                        <input type="email" id="registerEmail" class="form-control" placeholder="seller@example.com"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Phone Number</label>
-                        <input type="tel" id="registerPhone" class="form-control" placeholder="e.g., 9876543210" required>
+                        <input type="tel" id="registerPhone" class="form-control" placeholder="e.g., 9876543210"
+                            required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Address</label>
-                        <input type="text" id="registerAddress" class="form-control" placeholder="Your business/home address" required>
+                        <input type="text" id="registerAddress" class="form-control"
+                            placeholder="Your business/home address" required>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Password</label>
-                        <input type="password" id="registerPassword" class="form-control" placeholder="Create a strong password" required minlength="6">
+                        <input type="password" id="registerPassword" class="form-control"
+                            placeholder="Create a strong password" required minlength="6">
                     </div>
                     <button type="submit" class="btn btn-theme w-100 mt-3">Register as Seller</button>
                     <div class="text-center mt-4">
                         <span class="text-muted">Already have an account? </span>
-                        <a onclick="showPage('login')" class="text-success fw-bold" style="cursor:pointer;">Login here</a>
+                        <a onclick="showPage('login')" class="text-success fw-bold" style="cursor:pointer;">Login
+                            here</a>
                     </div>
                 </form>
             </div>
@@ -316,30 +496,73 @@
                 <form id="resetPasswordForm">
                     <div class="mb-3">
                         <label class="form-label">Email address</label>
-                        <input type="email" id="resetEmail" class="form-control" placeholder="Enter your email" required>
+                        <input type="email" id="resetEmail" class="form-control" placeholder="Enter your email"
+                            required>
                     </div>
                     <div class="mb-4">
                         <label class="form-label">New Password</label>
-                        <input type="password" id="resetNewPassword" class="form-control" placeholder="Enter new password" required minlength="6">
+                        <input type="password" id="resetNewPassword" class="form-control"
+                            placeholder="Enter new password" required minlength="6">
                     </div>
                     <button type="submit" class="btn btn-theme w-100">Reset Password</button>
                     <div class="text-center mt-3">
-                        <a onclick="showPage('login')" class="text-secondary" style="cursor:pointer;"><i class="fa-solid fa-arrow-left"></i> Back to Login</a>
+                        <a onclick="showPage('login')" class="text-secondary" style="cursor:pointer;"><i
+                                class="fa-solid fa-arrow-left"></i> Back to Login</a>
                     </div>
                 </form>
             </div>
         </div>
 
-        <!-- 5. PLACE PREDICT PAGE (Placeholder) -->
+        <!-- 5. PLACE PREDICT PAGE (Functional Search Engine) -->
         <div id="place-predict" class="page-view">
             <div class="innerpage-banner">
-                <h2>Predict Best Place to Live</h2>
+                <h2>Search Property By Place</h2>
             </div>
-            <div class="form-container text-center">
-                <i class="fa-solid fa-map-location-dot fa-4x text-success mb-3"></i>
-                <h3>Coming Soon</h3>
-                <p class="text-muted">Our AI is currently analyzing geographical data to recommend the perfect neighborhood based on your lifestyle inputs.</p>
-                <button class="btn btn-theme mt-3" onclick="showPage('price-predict')">Try Price Predictor Instead</button>
+            <div class="container mt-5">
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="card shadow-sm border-0 bg-white">
+                            <div class="card-body p-4">
+                                <h4 class="text-success mb-4"><i class="fa-solid fa-filter me-2"></i>Filters</h4>
+                                <form id="searchPlaceForm">
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Location / Place</label>
+                                        <input type="text" id="searchQuery" class="form-control" placeholder="City, State, or Address...">
+                                    </div>
+                                    <div class="row mb-3">
+                                        <div class="col-6">
+                                            <label class="form-label fw-bold">Min Price</label>
+                                            <input type="number" id="searchMinPrice" class="form-control" placeholder="$0">
+                                        </div>
+                                        <div class="col-6">
+                                            <label class="form-label fw-bold">Max Price</label>
+                                            <input type="number" id="searchMaxPrice" class="form-control" placeholder="Any">
+                                        </div>
+                                    </div>
+                                    <div class="mb-3">
+                                        <label class="form-label fw-bold">Bedrooms</label>
+                                        <input type="number" id="searchBedrooms" class="form-control" placeholder="Any">
+                                    </div>
+                                    
+                                    <button type="button" id="searchLocationBtn" class="btn btn-outline-primary w-100 mb-3 text-start">
+                                        <i class="fa-solid fa-crosshairs me-2"></i> <span id="searchLocBtnText">Detect Nearby Location</span>
+                                    </button>
+                                    
+                                    <button type="submit" class="btn btn-theme w-100"><i class="fa-solid fa-magnifying-glass me-2"></i>Search</button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-8">
+                        <h4 class="mb-4">Search Results</h4>
+                        <div id="searchResultsGrid" class="row g-4">
+                            <div class="col-12 text-center text-muted py-5">
+                                <i class="fa-solid fa-city fa-3x mb-3 text-secondary"></i>
+                                <p>Enter search criteria to find the perfect property.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -351,14 +574,21 @@
             <div class="container mt-5">
                 <div class="row">
                     <div class="col-md-8">
-                        <img src="assets/images/property-1.jpg" class="img-fluid rounded mb-4 w-100" alt="Property Detail" onerror="this.src='https://via.placeholder.com/800x400?text=Property+Detail+Image'">
+                        <img src="assets/images/property-1.jpg" class="img-fluid rounded mb-4 w-100"
+                            alt="Property Detail"
+                            onerror="this.src='https://via.placeholder.com/800x400?text=Property+Detail+Image'">
                         <h3>Property Overview</h3>
-                        <p class="text-muted">A beautiful, well-maintained cottage featuring modern amenities while retaining its classic charm. Located in a quiet, family-friendly neighborhood with excellent schools nearby.</p>
+                        <p class="text-muted">A beautiful, well-maintained cottage featuring modern amenities while
+                            retaining its classic charm. Located in a quiet, family-friendly neighborhood with excellent
+                            schools nearby.</p>
                         <h4 class="mt-4">Features</h4>
                         <ul class="list-group list-group-flush mb-4">
-                            <li class="list-group-item bg-transparent"><i class="fa-solid fa-check text-success mr-2"></i> Hardwood Floors</li>
-                            <li class="list-group-item bg-transparent"><i class="fa-solid fa-check text-success mr-2"></i> Fully Renovated Kitchen</li>
-                            <li class="list-group-item bg-transparent"><i class="fa-solid fa-check text-success mr-2"></i> Large Backyard</li>
+                            <li class="list-group-item bg-transparent"><i
+                                    class="fa-solid fa-check text-success mr-2"></i> Hardwood Floors</li>
+                            <li class="list-group-item bg-transparent"><i
+                                    class="fa-solid fa-check text-success mr-2"></i> Fully Renovated Kitchen</li>
+                            <li class="list-group-item bg-transparent"><i
+                                    class="fa-solid fa-check text-success mr-2"></i> Large Backyard</li>
                         </ul>
                     </div>
                     <div class="col-md-4">
@@ -371,7 +601,8 @@
                                 <li class="mb-2"><i class="fa-solid fa-calendar-days w-20"></i> Built in 1995</li>
                             </ul>
                             <button class="btn btn-theme w-100 mb-2">Contact Agent</button>
-                            <button class="btn btn-outline-success w-100" onclick="showPage('price-predict')">Check AI Valuation</button>
+                            <button class="btn btn-outline-success w-100" onclick="showPage('price-predict')">Check AI
+                                Valuation</button>
                         </div>
                     </div>
                 </div>
@@ -383,7 +614,7 @@
             <div class="innerpage-banner">
                 <h2>AI Property Valuator</h2>
             </div>
-            
+
             <div class="predict-wrapper">
                 <div class="text-center mb-5">
                     <h3 class="fw-bold text-dark">Estimate Your Home's Value</h3>
@@ -394,8 +625,9 @@
                     <div class="row g-4">
                         <!-- Core Details Column -->
                         <div class="col-md-6 border-end pe-md-4">
-                            <h5 class="border-bottom pb-2 mb-4 text-success"><i class="fa-solid fa-list mr-2"></i> Core Details</h5>
-                            
+                            <h5 class="border-bottom pb-2 mb-4 text-success"><i class="fa-solid fa-list mr-2"></i> Core
+                                Details</h5>
+
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Bedrooms *</label>
                                 <input type="number" id="bedrooms" required class="form-control" placeholder="e.g., 3">
@@ -403,29 +635,35 @@
 
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Bathrooms *</label>
-                                <input type="number" step="0.25" id="bathrooms" required class="form-control" placeholder="e.g., 2.5">
+                                <input type="number" step="0.25" id="bathrooms" required class="form-control"
+                                    placeholder="e.g., 2.5">
                             </div>
 
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Living Area (SqFt) *</label>
-                                <input type="number" id="sqft_living" required class="form-control" placeholder="e.g., 2000">
+                                <input type="number" id="sqft_living" required class="form-control"
+                                    placeholder="e.g., 2000">
                             </div>
 
                             <div class="mb-3">
-                                <label class="form-label fw-bold">Lot Size (SqFt) <span class="fw-normal text-muted">(Optional)</span></label>
-                                <input type="number" id="sqft_lot" class="form-control" placeholder="Auto-calculated if blank">
+                                <label class="form-label fw-bold">Lot Size (SqFt) <span
+                                        class="fw-normal text-muted">(Optional)</span></label>
+                                <input type="number" id="sqft_lot" class="form-control"
+                                    placeholder="Auto-calculated if blank">
                             </div>
-                            
+
                             <div class="mb-3">
                                 <label class="form-label fw-bold">Year Built *</label>
-                                <input type="number" id="yr_built" required class="form-control" placeholder="e.g., 1995">
+                                <input type="number" id="yr_built" required class="form-control"
+                                    placeholder="e.g., 1995">
                             </div>
                         </div>
 
                         <!-- Quality & Location Column -->
                         <div class="col-md-6 ps-md-4">
-                            <h5 class="border-bottom pb-2 mb-4 text-success"><i class="fa-solid fa-medal mr-2"></i> Quality & Location</h5>
-                            
+                            <h5 class="border-bottom pb-2 mb-4 text-success"><i class="fa-solid fa-medal mr-2"></i>
+                                Quality & Location</h5>
+
                             <div class="row mb-3">
                                 <div class="col-6">
                                     <label class="form-label fw-bold">Floors</label>
@@ -459,16 +697,19 @@
                             <div class="card bg-light border-0">
                                 <div class="card-body">
                                     <p class="small text-muted mb-3">
-                                        <i class="fa-solid fa-location-dot text-primary"></i> Location greatly impacts the ML prediction.
+                                        <i class="fa-solid fa-location-dot text-primary"></i> Location greatly impacts
+                                        the ML prediction.
                                     </p>
                                     <button type="button" id="getLocationBtn" class="btn btn-outline-primary w-100">
                                         <i class="fa-solid fa-crosshairs"></i> Use My Current Location
                                     </button>
                                     <div id="locationStatus" class="small text-success mt-2 fw-bold d-none">
-                                        <i class="fa-solid fa-check-circle"></i> Location Acquired (<span id="latDisplay"></span>, <span id="longDisplay"></span>)
+                                        <i class="fa-solid fa-check-circle"></i> Location Acquired (<span
+                                            id="latDisplay"></span>, <span id="longDisplay"></span>)
                                     </div>
-                                    <p class="small text-muted mt-2 mb-0">If skipped, we will estimate based on your network IP.</p>
-                                    
+                                    <p class="small text-muted mt-2 mb-0">If skipped, we will estimate based on your
+                                        network IP.</p>
+
                                     <!-- Hidden inputs for coordinates -->
                                     <input type="hidden" id="lat">
                                     <input type="hidden" id="long">
@@ -532,25 +773,31 @@
         <div class="modal-dialog modal-lg modal-dialog-scrollable">
             <div class="modal-content">
                 <div class="modal-header bg-success text-white">
-                    <h5 class="modal-title" id="addHouseModalLabel"><i class="fa-solid fa-house-circle-check me-2"></i>List a New Property</h5>
-                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                    <h5 class="modal-title" id="addHouseModalLabel"><i
+                            class="fa-solid fa-house-circle-check me-2"></i>List a New Property</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"
+                        aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
                     <form id="addHouseForm" enctype="multipart/form-data">
                         <!-- Basic Info -->
-                        <h6 class="text-success border-bottom pb-2 mb-3"><i class="fa-solid fa-info-circle me-1"></i> Basic Info</h6>
+                        <h6 class="text-success border-bottom pb-2 mb-3"><i class="fa-solid fa-info-circle me-1"></i>
+                            Basic Info</h6>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Property Title *</label>
-                            <input type="text" id="houseTitle" class="form-control" placeholder="e.g., Beautiful Family Home" required>
+                            <input type="text" id="houseTitle" class="form-control"
+                                placeholder="e.g., Beautiful Family Home" required>
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Description</label>
-                            <textarea id="houseDescription" class="form-control" rows="3" placeholder="Describe this property..."></textarea>
+                            <textarea id="houseDescription" class="form-control" rows="3"
+                                placeholder="Describe this property..."></textarea>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Asking Price ($) *</label>
-                                <input type="number" id="housePrice" class="form-control" placeholder="e.g., 450000" required>
+                                <input type="number" id="housePrice" class="form-control" placeholder="e.g., 450000"
+                                    required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Year Built</label>
@@ -559,7 +806,8 @@
                         </div>
 
                         <!-- Property Details -->
-                        <h6 class="text-success border-bottom pb-2 mb-3 mt-4"><i class="fa-solid fa-ruler-combined me-1"></i> Property Details</h6>
+                        <h6 class="text-success border-bottom pb-2 mb-3 mt-4"><i
+                                class="fa-solid fa-ruler-combined me-1"></i> Property Details</h6>
                         <div class="row mb-3">
                             <div class="col-4">
                                 <label class="form-label fw-bold">Bedrooms *</label>
@@ -567,7 +815,8 @@
                             </div>
                             <div class="col-4">
                                 <label class="form-label fw-bold">Bathrooms *</label>
-                                <input type="number" step="0.5" id="houseBathrooms" class="form-control" placeholder="2" required>
+                                <input type="number" step="0.5" id="houseBathrooms" class="form-control" placeholder="2"
+                                    required>
                             </div>
                             <div class="col-4">
                                 <label class="form-label fw-bold">Floors</label>
@@ -577,7 +826,8 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Living Area (SqFt) *</label>
-                                <input type="number" id="houseSqftLiving" class="form-control" placeholder="e.g., 2000" required>
+                                <input type="number" id="houseSqftLiving" class="form-control" placeholder="e.g., 2000"
+                                    required>
                             </div>
                             <div class="col-md-6">
                                 <label class="form-label fw-bold">Lot Size (SqFt)</label>
@@ -600,14 +850,17 @@
                         </div>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Year Renovated</label>
-                            <input type="number" id="houseYrRenovated" class="form-control" placeholder="0 if never renovated">
+                            <input type="number" id="houseYrRenovated" class="form-control"
+                                placeholder="0 if never renovated">
                         </div>
 
                         <!-- Location -->
-                        <h6 class="text-success border-bottom pb-2 mb-3 mt-4"><i class="fa-solid fa-location-dot me-1"></i> Location</h6>
+                        <h6 class="text-success border-bottom pb-2 mb-3 mt-4"><i
+                                class="fa-solid fa-location-dot me-1"></i> Location</h6>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Street Address *</label>
-                            <input type="text" id="houseAddress" class="form-control" placeholder="Full street address" required>
+                            <input type="text" id="houseAddress" class="form-control" placeholder="Full street address"
+                                required>
                         </div>
                         <div class="row mb-3">
                             <div class="col-md-4">
@@ -625,7 +878,8 @@
                         </div>
 
                         <!-- Amenities -->
-                        <h6 class="text-success border-bottom pb-2 mb-3 mt-4"><i class="fa-solid fa-star me-1"></i> Amenities</h6>
+                        <h6 class="text-success border-bottom pb-2 mb-3 mt-4"><i class="fa-solid fa-star me-1"></i>
+                            Amenities</h6>
                         <div class="row mb-3">
                             <div class="col-6 col-md-3">
                                 <div class="form-check">
@@ -658,10 +912,12 @@
                         </div>
 
                         <!-- Images -->
-                        <h6 class="text-success border-bottom pb-2 mb-3 mt-4"><i class="fa-solid fa-images me-1"></i> Photos</h6>
+                        <h6 class="text-success border-bottom pb-2 mb-3 mt-4"><i class="fa-solid fa-images me-1"></i>
+                            Photos</h6>
                         <div class="mb-3">
                             <label class="form-label fw-bold">Upload Property Images</label>
-                            <input type="file" id="houseImages" class="form-control" multiple accept="image/png,image/jpeg,image/webp">
+                            <input type="file" id="houseImages" class="form-control" multiple
+                                accept="image/png,image/jpeg,image/webp">
                             <div class="form-text">You can select multiple images (jpg, png, webp)</div>
                         </div>
                     </form>
@@ -670,8 +926,66 @@
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     <button type="button" class="btn btn-theme" id="submitHouseBtn">
                         <span id="submitHouseText">Submit Listing</span>
-                        <span id="submitHouseSpinner" class="spinner-border spinner-border-sm d-none" role="status"></span>
+                        <span id="submitHouseSpinner" class="spinner-border spinner-border-sm d-none"
+                            role="status"></span>
                     </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===== PROPERTY DETAILS MODAL ===== -->
+    <div class="modal fade" id="propertyDetailsModal" tabindex="-1" aria-labelledby="propertyDetailsLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-scrollable">
+            <div class="modal-content">
+                <div class="modal-header bg-dark text-white">
+                    <h5 class="modal-title" id="propertyDetailsLabel"><i class="fa-solid fa-house me-2"></i>Property Details</h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-0">
+                    <img src="" id="detailsImg" class="w-100" style="max-height: 400px; object-fit: cover;" onerror="this.src='https://via.placeholder.com/800x400?text=No+Image'">
+                    <div class="p-4">
+                        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-3 gap-3">
+                            <h3 class="fw-bold mb-0" id="detailsTitle">Property Title</h3>
+                            <h3 class="text-success fw-bold mb-0 bg-success bg-opacity-10 px-3 py-1 rounded" id="detailsPrice">$0</h3>
+                        </div>
+                        <h6 class="text-muted mb-4"><i class="fa-solid fa-map-pin text-primary me-2"></i><span id="detailsAddress">Address</span></h6>
+                        
+                        <div class="row mb-4 bg-light p-3 rounded mx-0">
+                            <div class="col-6 col-md-3 mb-3 mb-md-0 text-center border-end">
+                                <h4 class="text-success mb-1" id="detailsBeds">0</h4>
+                                <span class="text-muted small fw-bold text-uppercase">Bedrooms</span>
+                            </div>
+                            <div class="col-6 col-md-3 mb-3 mb-md-0 text-center border-end">
+                                <h4 class="text-success mb-1" id="detailsBaths">0</h4>
+                                <span class="text-muted small fw-bold text-uppercase">Bathrooms</span>
+                            </div>
+                            <div class="col-6 col-md-3 text-center border-end">
+                                <h4 class="text-success mb-1" id="detailsSqft">0</h4>
+                                <span class="text-muted small fw-bold text-uppercase">SqFt Living</span>
+                            </div>
+                            <div class="col-6 col-md-3 text-center">
+                                <h4 class="text-success mb-1" id="detailsYear">N/A</h4>
+                                <span class="text-muted small fw-bold text-uppercase">Year Built</span>
+                            </div>
+                        </div>
+                        
+                        <h5 class="fw-bold border-bottom pb-2 mb-3">Description</h5>
+                        <p class="text-muted" id="detailsDesc">No description provided.</p>
+                        
+                        <h5 class="fw-bold border-bottom pb-2 mb-3 mt-4">Listed By</h5>
+                        <div class="d-flex align-items-center mb-2">
+                            <i class="fa-solid fa-user-circle fa-2x text-secondary me-3"></i>
+                            <div>
+                                <h6 class="mb-0 fw-bold text-dark" id="detailsSellerName">Seller Name</h6>
+                                <p class="mb-0 text-muted small"><i class="fa-solid fa-phone me-1"></i> <span id="detailsSellerPhone">Phone</span></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
+                    <a href="#" class="btn btn-theme px-4" id="detailsContactBtn"><i class="fa-solid fa-phone me-2"></i>Contact Seller</a>
                 </div>
             </div>
         </div>
@@ -684,7 +998,8 @@
                 <div class="col-md-4 mb-4">
                     <div class="logo-div">
                         <a onclick="showPage('home')" style="cursor:pointer;">
-                            <img src="assets/images/logo-final.png" alt="logo" onerror="this.src='https://via.placeholder.com/200x60?text=Smart+Dwellings'">
+                            <img src="assets/images/logo-final.png" alt="logo"
+                                onerror="this.src='https://via.placeholder.com/200x60?text=Smart+Dwellings'">
                         </a>
                     </div>
                     <p>Empowering your real estate decisions with state-of-the-art Machine Learning.</p>
@@ -712,7 +1027,8 @@
     </footer>
 
     <!-- Bootstrap Bundle with Popper -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+        crossorigin="anonymous"></script>
 
     <!-- ************************************************* Scripts ************************************************* -->
     <script>
@@ -720,14 +1036,14 @@
         function showPage(pageId) {
             // Hide all pages
             document.querySelectorAll('.page-view').forEach(el => el.classList.remove('active-page'));
-            
+
             // Show target page
             document.getElementById(pageId).classList.add('active-page');
-            
+
             // Update active nav link
             document.querySelectorAll('#mainNavbar .nav-link').forEach(el => el.classList.remove('active'));
             const navLink = document.getElementById('nav-' + pageId);
-            if(navLink) navLink.classList.add('active');
+            if (navLink) navLink.classList.add('active');
 
             // Close mobile hamburger menu after navigation
             const navCollapse = document.getElementById('mainNavbar');
@@ -742,7 +1058,7 @@
 
         // --- ML BACKEND CONFIGURATION ---
         // Change this to your live server URL when you deploy (e.g., https://your-api.com)
-        const BASE_URL = "http://127.0.0.1:8000"; 
+        const BASE_URL = "http://127.0.0.1:8000";
 
         // --- GEOLOCATION LOGIC ---
         const getLocationBtn = document.getElementById('getLocationBtn');
@@ -757,10 +1073,10 @@
                     (position) => {
                         latInput.value = position.coords.latitude;
                         longInput.value = position.coords.longitude;
-                        
+
                         document.getElementById('latDisplay').innerText = position.coords.latitude.toFixed(4);
                         document.getElementById('longDisplay').innerText = position.coords.longitude.toFixed(4);
-                        
+
                         getLocationBtn.classList.add('d-none');
                         locationStatus.classList.remove('d-none');
                     },
@@ -775,354 +1091,354 @@
         });
 
         // ===============================
-// AUTHENTICATION SYSTEM (JWT)
-// ===============================
+        // AUTHENTICATION SYSTEM (JWT)
+        // ===============================
 
-// --- JWT Helper Functions ---
-function getToken() {
-    return localStorage.getItem("jwt_token");
-}
+        // --- JWT Helper Functions ---
+        function getToken() {
+            return localStorage.getItem("jwt_token");
+        }
 
-function setToken(token) {
-    localStorage.setItem("jwt_token", token);
-}
+        function setToken(token) {
+            localStorage.setItem("jwt_token", token);
+        }
 
-function clearAuth() {
-    localStorage.removeItem("jwt_token");
-    localStorage.removeItem("user");
-}
+        function clearAuth() {
+            localStorage.removeItem("jwt_token");
+            localStorage.removeItem("user");
+        }
 
-function handleUnauthorized() {
-    clearAuth();
-    showToast("Session expired. Please login again.", "warning");
-    logoutUser();
-    showPage("login");
-}
-
-// ---------- REGISTER (Seller with Phone + Address) ----------
-document.getElementById("registerForm")?.addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const username = document.getElementById("registerUsername").value.trim();
-    const email = document.getElementById("registerEmail").value.trim();
-    const phone = document.getElementById("registerPhone").value.trim();
-    const address = document.getElementById("registerAddress").value.trim();
-    const password = document.getElementById("registerPassword").value.trim();
-
-    if (!username || !email || !phone || !address || !password) {
-        showToast("All fields are required.", "error");
-        return;
-    }
-
-    try {
-        const response = await fetch(`${BASE_URL}/api/register`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ username, email, password, phone, address })
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data.status === "success") {
-            showToast("Seller account created successfully! Please login.", "success");
+        function handleUnauthorized() {
+            clearAuth();
+            showToast("Session expired. Please login again.", "warning");
+            logoutUser();
             showPage("login");
-            document.getElementById("registerForm").reset();
-        } else {
-            showToast(data.error || "Registration failed.", "error");
         }
 
-    } catch (error) {
-        console.error("Register Error:", error);
-        showToast("Server connection failed.", "error");
-    }
-});
+        // ---------- REGISTER (Seller with Phone + Address) ----------
+        document.getElementById("registerForm")?.addEventListener("submit", async function (e) {
+            e.preventDefault();
 
+            const username = document.getElementById("registerUsername").value.trim();
+            const email = document.getElementById("registerEmail").value.trim();
+            const phone = document.getElementById("registerPhone").value.trim();
+            const address = document.getElementById("registerAddress").value.trim();
+            const password = document.getElementById("registerPassword").value.trim();
 
-// ---------- LOGIN (stores JWT token) ----------
-document.getElementById("loginForm")?.addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const email = document.getElementById("loginEmail").value.trim();
-    const password = document.getElementById("loginPassword").value.trim();
-
-    if (!email || !password) {
-        showToast("Email and password required.", "error");
-        return;
-    }
-
-    try {
-        const response = await fetch(`${BASE_URL}/api/login`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, password })
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data.status === "success") {
-
-            // Save user info and JWT token
-            localStorage.setItem("user", JSON.stringify(data.user));
-            setToken(data.token);
-
-            updateNavbarAfterLogin(data.user.username);
-
-            showToast(`Welcome back, ${data.user.username}!`, "success");
-            showPage("dashboard");
-            loadMyListings();
-            document.getElementById("loginForm").reset();
-
-        } else {
-            showToast(data.error || "Invalid credentials.", "error");
-        }
-
-    } catch (error) {
-        console.error("Login Error:", error);
-        showToast("Server connection failed.", "error");
-    }
-});
-
-
-// ---------- RESET PASSWORD (calls real API) ----------
-document.getElementById("resetPasswordForm")?.addEventListener("submit", async function (e) {
-    e.preventDefault();
-
-    const email = document.getElementById("resetEmail").value.trim();
-    const newPassword = document.getElementById("resetNewPassword").value.trim();
-
-    if (!email || !newPassword) {
-        showToast("All fields are required.", "error");
-        return;
-    }
-
-    try {
-        const response = await fetch(`${BASE_URL}/api/reset-password`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ email, new_password: newPassword })
-        });
-
-        const data = await response.json();
-
-        if (response.ok && data.status === "success") {
-            showToast("Password updated successfully! Please login with your new password.", "success");
-            showPage("login");
-            document.getElementById("resetPasswordForm").reset();
-        } else {
-            showToast(data.error || "Password reset failed.", "error");
-        }
-
-    } catch (error) {
-        console.error("Reset Password Error:", error);
-        showToast("Server connection failed.", "error");
-    }
-});
-
-
-// ---------- NAVBAR UPDATE ----------
-function updateNavbarAfterLogin(username) {
-    const loginLink = document.getElementById("nav-login");
-    const registerLink = document.getElementById("nav-register");
-    const dashboardLi = document.getElementById("nav-dashboard-li");
-
-    if (loginLink) {
-        loginLink.innerText = `Hi, ${username}`;
-        loginLink.onclick = null;
-        loginLink.style.cursor = "default";
-    }
-
-    if (registerLink) {
-        registerLink.innerText = "Logout";
-        registerLink.classList.remove("btn-theme");
-        registerLink.onclick = logoutUser;
-    }
-
-    // Show dashboard nav link
-    if (dashboardLi) dashboardLi.classList.remove("d-none");
-
-    // Update dashboard welcome name
-    const dashName = document.getElementById("dashboardSellerName");
-    if (dashName) dashName.innerText = username;
-}
-
-
-function logoutUser() {
-    clearAuth();
-
-    document.getElementById("nav-login").innerText = "Login";
-    document.getElementById("nav-login").onclick = () => showPage("login");
-    document.getElementById("nav-login").style.cursor = "pointer";
-
-    const registerLink = document.getElementById("nav-register");
-    registerLink.innerText = "Seller Register";
-    registerLink.classList.add("btn-theme");
-    registerLink.onclick = () => showPage("register");
-
-    // Hide dashboard nav link
-    const dashboardLi = document.getElementById("nav-dashboard-li");
-    if (dashboardLi) dashboardLi.classList.add("d-none");
-
-    showPage("home");
-}
-
-// ---------- CHECK SESSION ON PAGE LOAD ----------
-window.addEventListener("DOMContentLoaded", () => {
-    const user = JSON.parse(localStorage.getItem("user"));
-    const token = getToken();
-    if (user && token) {
-        updateNavbarAfterLogin(user.username);
-        loadMyListings();
-    } else {
-        clearAuth();
-    }
-});
-
-// ===============================
-// SELLER DASHBOARD - HOUSE LISTINGS
-// ===============================
-
-// ---------- SUBMIT NEW HOUSE LISTING ----------
-document.getElementById("submitHouseBtn")?.addEventListener("click", async function () {
-    const token = getToken();
-    if (!token) {
-        showToast("Please login first.", "error");
-        showPage("login");
-        return;
-    }
-
-    // Validate required fields
-    const title = document.getElementById("houseTitle").value.trim();
-    const price = document.getElementById("housePrice").value;
-    const bedrooms = document.getElementById("houseBedrooms").value;
-    const bathrooms = document.getElementById("houseBathrooms").value;
-    const sqftLiving = document.getElementById("houseSqftLiving").value;
-    const address = document.getElementById("houseAddress").value.trim();
-
-    if (!title || !price || !bedrooms || !bathrooms || !sqftLiving || !address) {
-        showToast("Please fill in all required fields (marked with *).", "error");
-        return;
-    }
-
-    // Show spinner
-    document.getElementById("submitHouseText").classList.add("d-none");
-    document.getElementById("submitHouseSpinner").classList.remove("d-none");
-
-    // Build FormData for multipart upload (supports images)
-    const formData = new FormData();
-    formData.append("title", title);
-    formData.append("description", document.getElementById("houseDescription").value.trim());
-    formData.append("price", price);
-    formData.append("bedrooms", bedrooms);
-    formData.append("bathrooms", bathrooms);
-    formData.append("sqft_living", sqftLiving);
-    formData.append("address", address);
-
-    // Optional fields
-    const sqftLot = document.getElementById("houseSqftLot").value;
-    if (sqftLot) formData.append("sqft_lot", sqftLot);
-    const floors = document.getElementById("houseFloors").value;
-    if (floors) formData.append("floors", floors);
-    const yrBuilt = document.getElementById("houseYrBuilt").value;
-    if (yrBuilt) formData.append("yr_built", yrBuilt);
-    const yrRenovated = document.getElementById("houseYrRenovated").value;
-    if (yrRenovated) formData.append("yr_renovated", yrRenovated);
-    const city = document.getElementById("houseCity").value.trim();
-    if (city) formData.append("city", city);
-    const state = document.getElementById("houseState").value.trim();
-    if (state) formData.append("state", state);
-    const zipcode = document.getElementById("houseZipcode").value.trim();
-    if (zipcode) formData.append("zipcode", zipcode);
-
-    formData.append("condition", document.getElementById("houseCondition").value || 3);
-    formData.append("grade", document.getElementById("houseGrade").value || 7);
-    formData.append("view", document.getElementById("houseView").value || 0);
-    formData.append("waterfront", document.getElementById("houseWaterfront").checked ? 1 : 0);
-    formData.append("parking", document.getElementById("houseParking").checked ? 1 : 0);
-    formData.append("garden", document.getElementById("houseGarden").checked ? 1 : 0);
-    formData.append("pool", document.getElementById("housePool").checked ? 1 : 0);
-    formData.append("furnished", document.getElementById("houseFurnished").checked ? 1 : 0);
-
-    // Attach images
-    const imageFiles = document.getElementById("houseImages").files;
-    for (let i = 0; i < imageFiles.length; i++) {
-        formData.append("images", imageFiles[i]);
-    }
-
-    try {
-        const response = await fetch(`${BASE_URL}/api/houses`, {
-            method: "POST",
-            headers: { "Authorization": `Bearer ${token}` },
-            body: formData
-        });
-
-        if (response.status === 401) { handleUnauthorized(); return; }
-
-        const data = await response.json();
-
-        if (response.ok && data.status === "success") {
-            showToast("Property listed successfully!", "success");
-            // Close modal and reset form
-            const modal = bootstrap.Modal.getInstance(document.getElementById("addHouseModal"));
-            if (modal) modal.hide();
-            document.getElementById("addHouseForm").reset();
-            // Refresh listings
-            loadMyListings();
-        } else {
-            showToast(data.error || "Failed to list property.", "error");
-        }
-
-    } catch (error) {
-        console.error("Add House Error:", error);
-        showToast("Server connection failed.", "error");
-    } finally {
-        document.getElementById("submitHouseText").classList.remove("d-none");
-        document.getElementById("submitHouseSpinner").classList.add("d-none");
-    }
-});
-
-// ---------- LOAD MY LISTINGS ----------
-async function loadMyListings() {
-    const token = getToken();
-    if (!token) return;
-
-    try {
-        const response = await fetch(`${BASE_URL}/api/my-houses`, {
-            headers: { "Authorization": `Bearer ${token}` }
-        });
-
-        if (response.status === 401) return;
-
-        const data = await response.json();
-
-        if (data.status === "success") {
-            const grid = document.getElementById("myListingsGrid");
-            const noMsg = document.getElementById("noListingsMsg");
-
-            if (data.houses.length === 0) {
-                if (noMsg) noMsg.style.display = "block";
+            if (!username || !email || !phone || !address || !password) {
+                showToast("All fields are required.", "error");
                 return;
             }
 
-            // Clear grid
-            grid.innerHTML = "";
+            try {
+                const response = await fetch(`${BASE_URL}/api/register`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ username, email, password, phone, address })
+                });
 
-            data.houses.forEach(house => {
-                const imgSrc = (house.images && house.images.length > 0)
-                    ? `${BASE_URL}/uploads/${house.images[0]}`
-                    : "https://via.placeholder.com/400x250?text=No+Image";
+                const data = await response.json();
 
-                const priceFormatted = new Intl.NumberFormat('en-US', {
-                    style: 'currency', currency: 'USD', maximumFractionDigits: 0
-                }).format(house.price);
+                if (response.ok && data.status === "success") {
+                    showToast("Seller account created successfully! Please login.", "success");
+                    showPage("login");
+                    document.getElementById("registerForm").reset();
+                } else {
+                    showToast(data.error || "Registration failed.", "error");
+                }
 
-                const amenities = [];
-                if (house.waterfront) amenities.push("Waterfront");
-                if (house.parking) amenities.push("Parking");
-                if (house.garden) amenities.push("Garden");
-                if (house.pool) amenities.push("Pool");
-                if (house.furnished) amenities.push("Furnished");
+            } catch (error) {
+                console.error("Register Error:", error);
+                showToast("Server connection failed.", "error");
+            }
+        });
 
-                const card = `
+
+        // ---------- LOGIN (stores JWT token) ----------
+        document.getElementById("loginForm")?.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById("loginEmail").value.trim();
+            const password = document.getElementById("loginPassword").value.trim();
+
+            if (!email || !password) {
+                showToast("Email and password required.", "error");
+                return;
+            }
+
+            try {
+                const response = await fetch(`${BASE_URL}/api/login`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, password })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.status === "success") {
+
+                    // Save user info and JWT token
+                    localStorage.setItem("user", JSON.stringify(data.user));
+                    setToken(data.token);
+
+                    updateNavbarAfterLogin(data.user.username);
+
+                    showToast(`Welcome back, ${data.user.username}!`, "success");
+                    showPage("dashboard");
+                    loadMyListings();
+                    document.getElementById("loginForm").reset();
+
+                } else {
+                    showToast(data.error || "Invalid credentials.", "error");
+                }
+
+            } catch (error) {
+                console.error("Login Error:", error);
+                showToast("Server connection failed.", "error");
+            }
+        });
+
+
+        // ---------- RESET PASSWORD (calls real API) ----------
+        document.getElementById("resetPasswordForm")?.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const email = document.getElementById("resetEmail").value.trim();
+            const newPassword = document.getElementById("resetNewPassword").value.trim();
+
+            if (!email || !newPassword) {
+                showToast("All fields are required.", "error");
+                return;
+            }
+
+            try {
+                const response = await fetch(`${BASE_URL}/api/reset-password`, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify({ email, new_password: newPassword })
+                });
+
+                const data = await response.json();
+
+                if (response.ok && data.status === "success") {
+                    showToast("Password updated successfully! Please login with your new password.", "success");
+                    showPage("login");
+                    document.getElementById("resetPasswordForm").reset();
+                } else {
+                    showToast(data.error || "Password reset failed.", "error");
+                }
+
+            } catch (error) {
+                console.error("Reset Password Error:", error);
+                showToast("Server connection failed.", "error");
+            }
+        });
+
+
+        // ---------- NAVBAR UPDATE ----------
+        function updateNavbarAfterLogin(username) {
+            const loginLink = document.getElementById("nav-login");
+            const registerLink = document.getElementById("nav-register");
+            const dashboardLi = document.getElementById("nav-dashboard-li");
+
+            if (loginLink) {
+                loginLink.innerText = `Hi, ${username}`;
+                loginLink.onclick = null;
+                loginLink.style.cursor = "default";
+            }
+
+            if (registerLink) {
+                registerLink.innerText = "Logout";
+                registerLink.classList.remove("btn-theme");
+                registerLink.onclick = logoutUser;
+            }
+
+            // Show dashboard nav link
+            if (dashboardLi) dashboardLi.classList.remove("d-none");
+
+            // Update dashboard welcome name
+            const dashName = document.getElementById("dashboardSellerName");
+            if (dashName) dashName.innerText = username;
+        }
+
+
+        function logoutUser() {
+            clearAuth();
+
+            document.getElementById("nav-login").innerText = "Login";
+            document.getElementById("nav-login").onclick = () => showPage("login");
+            document.getElementById("nav-login").style.cursor = "pointer";
+
+            const registerLink = document.getElementById("nav-register");
+            registerLink.innerText = "Seller Register";
+            registerLink.classList.add("btn-theme");
+            registerLink.onclick = () => showPage("register");
+
+            // Hide dashboard nav link
+            const dashboardLi = document.getElementById("nav-dashboard-li");
+            if (dashboardLi) dashboardLi.classList.add("d-none");
+
+            showPage("home");
+        }
+
+        // ---------- CHECK SESSION ON PAGE LOAD ----------
+        window.addEventListener("DOMContentLoaded", () => {
+            const user = JSON.parse(localStorage.getItem("user"));
+            const token = getToken();
+            if (user && token) {
+                updateNavbarAfterLogin(user.username);
+                loadMyListings();
+            } else {
+                clearAuth();
+            }
+        });
+
+        // ===============================
+        // SELLER DASHBOARD - HOUSE LISTINGS
+        // ===============================
+
+        // ---------- SUBMIT NEW HOUSE LISTING ----------
+        document.getElementById("submitHouseBtn")?.addEventListener("click", async function () {
+            const token = getToken();
+            if (!token) {
+                showToast("Please login first.", "error");
+                showPage("login");
+                return;
+            }
+
+            // Validate required fields
+            const title = document.getElementById("houseTitle").value.trim();
+            const price = document.getElementById("housePrice").value;
+            const bedrooms = document.getElementById("houseBedrooms").value;
+            const bathrooms = document.getElementById("houseBathrooms").value;
+            const sqftLiving = document.getElementById("houseSqftLiving").value;
+            const address = document.getElementById("houseAddress").value.trim();
+
+            if (!title || !price || !bedrooms || !bathrooms || !sqftLiving || !address) {
+                showToast("Please fill in all required fields (marked with *).", "error");
+                return;
+            }
+
+            // Show spinner
+            document.getElementById("submitHouseText").classList.add("d-none");
+            document.getElementById("submitHouseSpinner").classList.remove("d-none");
+
+            // Build FormData for multipart upload (supports images)
+            const formData = new FormData();
+            formData.append("title", title);
+            formData.append("description", document.getElementById("houseDescription").value.trim());
+            formData.append("price", price);
+            formData.append("bedrooms", bedrooms);
+            formData.append("bathrooms", bathrooms);
+            formData.append("sqft_living", sqftLiving);
+            formData.append("address", address);
+
+            // Optional fields
+            const sqftLot = document.getElementById("houseSqftLot").value;
+            if (sqftLot) formData.append("sqft_lot", sqftLot);
+            const floors = document.getElementById("houseFloors").value;
+            if (floors) formData.append("floors", floors);
+            const yrBuilt = document.getElementById("houseYrBuilt").value;
+            if (yrBuilt) formData.append("yr_built", yrBuilt);
+            const yrRenovated = document.getElementById("houseYrRenovated").value;
+            if (yrRenovated) formData.append("yr_renovated", yrRenovated);
+            const city = document.getElementById("houseCity").value.trim();
+            if (city) formData.append("city", city);
+            const state = document.getElementById("houseState").value.trim();
+            if (state) formData.append("state", state);
+            const zipcode = document.getElementById("houseZipcode").value.trim();
+            if (zipcode) formData.append("zipcode", zipcode);
+
+            formData.append("condition", document.getElementById("houseCondition").value || 3);
+            formData.append("grade", document.getElementById("houseGrade").value || 7);
+            formData.append("view", document.getElementById("houseView").value || 0);
+            formData.append("waterfront", document.getElementById("houseWaterfront").checked ? 1 : 0);
+            formData.append("parking", document.getElementById("houseParking").checked ? 1 : 0);
+            formData.append("garden", document.getElementById("houseGarden").checked ? 1 : 0);
+            formData.append("pool", document.getElementById("housePool").checked ? 1 : 0);
+            formData.append("furnished", document.getElementById("houseFurnished").checked ? 1 : 0);
+
+            // Attach images
+            const imageFiles = document.getElementById("houseImages").files;
+            for (let i = 0; i < imageFiles.length; i++) {
+                formData.append("images", imageFiles[i]);
+            }
+
+            try {
+                const response = await fetch(`${BASE_URL}/api/houses`, {
+                    method: "POST",
+                    headers: { "Authorization": `Bearer ${token}` },
+                    body: formData
+                });
+
+                if (response.status === 401) { handleUnauthorized(); return; }
+
+                const data = await response.json();
+
+                if (response.ok && data.status === "success") {
+                    showToast("Property listed successfully!", "success");
+                    // Close modal and reset form
+                    const modal = bootstrap.Modal.getInstance(document.getElementById("addHouseModal"));
+                    if (modal) modal.hide();
+                    document.getElementById("addHouseForm").reset();
+                    // Refresh listings
+                    loadMyListings();
+                } else {
+                    showToast(data.error || "Failed to list property.", "error");
+                }
+
+            } catch (error) {
+                console.error("Add House Error:", error);
+                showToast("Server connection failed.", "error");
+            } finally {
+                document.getElementById("submitHouseText").classList.remove("d-none");
+                document.getElementById("submitHouseSpinner").classList.add("d-none");
+            }
+        });
+
+        // ---------- LOAD MY LISTINGS ----------
+        async function loadMyListings() {
+            const token = getToken();
+            if (!token) return;
+
+            try {
+                const response = await fetch(`${BASE_URL}/api/my-houses`, {
+                    headers: { "Authorization": `Bearer ${token}` }
+                });
+
+                if (response.status === 401) return;
+
+                const data = await response.json();
+
+                if (data.status === "success") {
+                    const grid = document.getElementById("myListingsGrid");
+                    const noMsg = document.getElementById("noListingsMsg");
+
+                    if (data.houses.length === 0) {
+                        if (noMsg) noMsg.style.display = "block";
+                        return;
+                    }
+
+                    // Clear grid
+                    grid.innerHTML = "";
+
+                    data.houses.forEach(house => {
+                        const imgSrc = (house.images && house.images.length > 0)
+                            ? `${BASE_URL}/uploads/${house.images[0]}`
+                            : "https://via.placeholder.com/400x250?text=No+Image";
+
+                        const priceFormatted = new Intl.NumberFormat('en-IN', {
+                            style: 'currency', currency: 'INR', maximumFractionDigits: 0
+                        }).format(house.price);
+
+                        const amenities = [];
+                        if (house.waterfront) amenities.push("Waterfront");
+                        if (house.parking) amenities.push("Parking");
+                        if (house.garden) amenities.push("Garden");
+                        if (house.pool) amenities.push("Pool");
+                        if (house.furnished) amenities.push("Furnished");
+
+                        const card = `
                     <div class="col-md-6 col-lg-4">
                         <div class="card h-100 shadow-sm border-0">
                             <img src="${imgSrc}" class="card-img-top" alt="${house.title}" style="height:200px; object-fit:cover;" onerror="this.src='https://via.placeholder.com/400x250?text=No+Image'">
@@ -1143,26 +1459,18 @@ async function loadMyListings() {
                         </div>
                     </div>`;
 
-                grid.innerHTML += card;
-            });
+                        grid.innerHTML += card;
+                    });
+                }
+            } catch (error) {
+                console.error("Load listings error:", error);
+            }
         }
-    } catch (error) {
-        console.error("Load listings error:", error);
-    }
-}
 
-        // --- FORM SUBMISSION & API FETCH (with JWT) ---
+        // --- FORM SUBMISSION & API FETCH (Public) ---
         document.getElementById('predictionForm').addEventListener('submit', async (e) => {
             e.preventDefault();
 
-            // Check if user is logged in
-            const token = getToken();
-            if (!token) {
-                showToast("Please login first to use the price predictor.", "warning");
-                showPage("login");
-                return;
-            }
-            
             // UI States
             const spinner = document.getElementById('loadingSpinner');
             const resultBox = document.getElementById('resultBox');
@@ -1189,9 +1497,8 @@ async function loadMyListings() {
             try {
                 const response = await fetch(`${BASE_URL}/predict`, {
                     method: 'POST',
-                    headers: { 
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
+                    headers: {
+                        'Content-Type': 'application/json'
                     },
                     body: JSON.stringify(payload)
                 });
@@ -1202,7 +1509,7 @@ async function loadMyListings() {
                 }
 
                 if (!response.ok) throw new Error("Network response was not ok");
-                
+
                 const data = await response.json();
 
                 if (data.status === "success") {
@@ -1213,9 +1520,9 @@ async function loadMyListings() {
                     }).format(data.predicted_price);
 
                     document.getElementById('priceDisplay').innerText = formattedPrice;
-                    
-                    const locText = latInput.value 
-                        ? "Calculated using your precise GPS coordinates." 
+
+                    const locText = latInput.value
+                        ? "Calculated using your precise GPS coordinates."
                         : "Calculated using your network IP approximate location.";
                     document.getElementById('locationUsedInfo').innerText = locText;
 
@@ -1232,35 +1539,224 @@ async function loadMyListings() {
             }
         });
 
-// ===============================
-// TOAST NOTIFICATION SYSTEM
-// ===============================
-function showToast(message, type = "success") {
-    const container = document.getElementById("toastContainer");
-    const toast = document.createElement("div");
-    toast.className = `toast-msg toast-${type}`;
+        // ===============================
+        // PROPERTY DETAILS JS
+        // ===============================
+        window.houseDataMap = window.houseDataMap || {};
 
-    const icons = {
-        success: '<i class="fa-solid fa-circle-check toast-icon"></i>',
-        error: '<i class="fa-solid fa-circle-xmark toast-icon"></i>',
-        warning: '<i class="fa-solid fa-triangle-exclamation toast-icon"></i>'
-    };
+        function showPropertyDetails(houseId) {
+            const house = window.houseDataMap[houseId];
+            if (!house) return;
 
-    toast.innerHTML = `
+            document.getElementById('detailsTitle').innerText = house.title || "No Title";
+            const priceFmt = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(house.price);
+            document.getElementById('detailsPrice').innerText = priceFmt;
+            
+            const addr = [house.address, house.city, house.state].filter(Boolean).join(", ");
+            document.getElementById('detailsAddress').innerText = addr || "Unknown Location";
+            
+            document.getElementById('detailsBeds').innerText = house.bedrooms || 0;
+            document.getElementById('detailsBaths').innerText = house.bathrooms || 0;
+            document.getElementById('detailsSqft').innerText = house.sqft_living || 0;
+            document.getElementById('detailsYear').innerText = house.yr_built || "N/A";
+            
+            document.getElementById('detailsDesc').innerText = house.description || "No specific details provided for this property.";
+            
+            document.getElementById('detailsSellerName').innerText = house.seller_name || "Unknown Seller";
+            document.getElementById('detailsSellerPhone').innerText = house.seller_phone || "No Phone Provided";
+            
+            if(house.seller_phone) {
+                document.getElementById('detailsContactBtn').href = `tel:${house.seller_phone}`;
+            } else {
+                document.getElementById('detailsContactBtn').href = `#`;
+            }
+
+            const imgSrc = (house.images && house.images.length > 0) ? `${BASE_URL}/uploads/${house.images[0]}` : "";
+            document.getElementById('detailsImg').src = imgSrc;
+
+            const modal = new bootstrap.Modal(document.getElementById('propertyDetailsModal'));
+            modal.show();
+        }
+
+        // ===============================
+        // PROXIMITY RECOMMENDATIONS
+        // ===============================
+        async function loadRecommendations(lat = null, long = null) {
+            try {
+                let url = `${BASE_URL}/api/recommendations`;
+                if(lat && long) {
+                    url += `?lat=${lat}&long=${long}`;
+                }
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                const grid = document.getElementById("recommendationsGrid");
+                if(!grid) return;
+                grid.innerHTML = "";
+                
+                if(data.status === "success" && data.houses.length > 0) {
+                    data.houses.slice(0, 3).forEach(house => {
+                        window.houseDataMap[house.id] = house;
+                        const imgSrc = (house.images && house.images.length > 0)
+                            ? `${BASE_URL}/uploads/${house.images[0]}`
+                            : "https://via.placeholder.com/400x250?text=No+Image";
+                        
+                        const priceFmt = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(house.price);
+                        
+                        grid.innerHTML += `
+                        <div class="col-md-4">
+                            <div class="card mb-4 h-100 shadow-sm border-0 pb-3">
+                                <img src="${imgSrc}" class="card-img-top" alt="${house.title}" style="height:250px;object-fit:cover;" onerror="this.src='https://via.placeholder.com/400x250?text=Property+Image'">
+                                <div class="card-body d-flex flex-column">
+                                    <h5 class="card-title text-success fw-bold">${priceFmt}</h5>
+                                    <h6 class="mb-2 fw-bold text-dark">${house.title}</h6>
+                                    <p class="text-muted small mb-3"><i class="fa-solid fa-location-dot text-primary"></i> ${house.address}, ${house.city}</p>
+                                    <div class="specifications mt-auto w-100">
+                                        <ul class="d-flex justify-content-between list-unstyled text-muted small p-0 m-0 pb-3 border-bottom mb-3 flex-wrap">
+                                            <li><i class="fa-solid fa-bed me-1"></i> ${house.bedrooms}</li>
+                                            <li><i class="fa-solid fa-bath me-1"></i> ${house.bathrooms}</li>
+                                            <li><i class="fa-solid fa-maximize me-1"></i> ${house.sqft_living} sqft</li>
+                                        </ul>
+                                    </div>
+                                    <button class="btn btn-outline-success w-100 mt-2" onclick="showPropertyDetails(${house.id})">View Details</button>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                } else {
+                    grid.innerHTML = `<p class="col-12 text-center text-muted">No recommendations found.</p>`;
+                }
+            } catch (err) {
+                console.error("Recommendations error", err);
+                const grid = document.getElementById("recommendationsGrid");
+                if(grid) grid.innerHTML = `<p class="col-12 text-center text-danger">Failed to load recommendations.</p>`;
+            }
+        }
+        
+        // Initial load of recommendations
+        window.addEventListener("DOMContentLoaded", () => {
+            loadRecommendations();
+        });
+
+        // ===============================
+        // SEARCH PLACE LOGIC
+        // ===============================
+        let searchLat = null;
+        let searchLong = null;
+        
+        document.getElementById('searchLocationBtn')?.addEventListener('click', function() {
+            if (navigator.geolocation) {
+                const btnText = document.getElementById("searchLocBtnText");
+                const btn = this;
+                btnText.innerText = 'Detecting...';
+                navigator.geolocation.getCurrentPosition((pos) => {
+                    searchLat = pos.coords.latitude;
+                    searchLong = pos.coords.longitude;
+                    btnText.innerText = 'Location Acquired';
+                    btn.classList.add("border-success");
+                    btn.classList.add("text-success");
+                }, () => {
+                    showToast("Could not get location.", "error");
+                    btnText.innerText = 'Detect Nearby Location';
+                });
+            }
+        });
+
+        document.getElementById('searchPlaceForm')?.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const q = document.getElementById("searchQuery").value;
+            const minP = document.getElementById("searchMinPrice").value;
+            const maxP = document.getElementById("searchMaxPrice").value;
+            const beds = document.getElementById("searchBedrooms").value;
+            
+            const grid = document.getElementById("searchResultsGrid");
+            grid.innerHTML = '<div class="col-12 text-center py-5"><div class="spinner-border text-success"></div></div>';
+            
+            let url = `${BASE_URL}/api/search?`;
+            const params = new URLSearchParams();
+            if(q) params.append("q", q);
+            if(minP) params.append("min_price", minP);
+            if(maxP) params.append("max_price", maxP);
+            if(beds) params.append("bedrooms", beds);
+            if(searchLat) { params.append("lat", searchLat); params.append("long", searchLong); }
+            
+            try {
+                const response = await fetch(url + params.toString());
+                const data = await response.json();
+                
+                grid.innerHTML = "";
+                if(data.status === "success" && data.houses.length > 0) {
+                    data.houses.forEach(house => {
+                        window.houseDataMap[house.id] = house;
+                        const imgSrc = (house.images && house.images.length > 0) ? `${BASE_URL}/uploads/${house.images[0]}` : "https://via.placeholder.com/400x250?text=No+Image";
+                        const priceFmt = new Intl.NumberFormat('en-IN', { style: 'currency', currency: 'INR', maximumFractionDigits: 0 }).format(house.price);
+                        
+                        // Highlight search terms if exists
+                        let formattedAddress = `${house.address}, ${house.city}, ${house.state}`;
+                        if(q) {
+                            // Split by query safely
+                            const regex = new RegExp(`(${q})`, 'gi');
+                            formattedAddress = formattedAddress.replace(regex, '<span class="text-success fw-bold bg-light px-1 rounded border border-success">$1</span>');
+                        }
+                        
+                        grid.innerHTML += `
+                        <div class="col-12">
+                            <div class="card shadow-sm border-0 d-flex flex-md-row overflow-hidden">
+                                <img src="${imgSrc}" class="img-fluid" style="width:250px; object-fit:cover;" onerror="this.src='https://via.placeholder.com/250x200?text='">
+                                <div class="card-body p-4">
+                                    <div class="d-flex justify-content-between align-items-center mb-2">
+                                        <h5 class="card-title fw-bold text-dark mb-0">${house.title}</h5>
+                                        <h5 class="text-success fw-bold m-0 bg-success bg-opacity-10 px-3 py-1 rounded">${priceFmt}</h5>
+                                    </div>
+                                    <p class="text-muted mt-2 mb-3"><i class="fa-solid fa-map-pin text-primary me-2"></i> ${formattedAddress}</p>
+                                    <div class="d-flex gap-4 text-muted small mt-3 border-top pt-3 align-items-center">
+                                        <span><i class="fa-solid fa-bed text-success me-1"></i> ${house.bedrooms} Beds</span>
+                                        <span><i class="fa-solid fa-bath text-success me-1"></i> ${house.bathrooms} Baths</span>
+                                        <span><i class="fa-solid fa-maximize text-success me-1"></i> ${house.sqft_living} SqFt</span>
+                                        <button class="btn btn-sm btn-outline-success ms-auto" onclick="showPropertyDetails(${house.id})">View Details</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>`;
+                    });
+                } else {
+                    grid.innerHTML = '<div class="col-12 text-center py-5 text-muted"><p>No properties match your filter.</p></div>';
+                }
+            } catch (err) {
+                 grid.innerHTML = '<div class="col-12 text-center py-5 text-danger"><p>Failed to load search results.</p></div>';
+            }
+        });
+
+        // ===============================
+        // TOAST NOTIFICATION SYSTEM
+        // ===============================
+        function showToast(message, type = "success") {
+            const container = document.getElementById("toastContainer");
+            const toast = document.createElement("div");
+            toast.className = `toast-msg toast-${type}`;
+
+            const icons = {
+                success: '<i class="fa-solid fa-circle-check toast-icon"></i>',
+                error: '<i class="fa-solid fa-circle-xmark toast-icon"></i>',
+                warning: '<i class="fa-solid fa-triangle-exclamation toast-icon"></i>'
+            };
+
+            toast.innerHTML = `
         ${icons[type] || icons.success}
         <span class="toast-text">${message}</span>
         <button class="toast-close" onclick="this.parentElement.classList.add('toast-exit'); setTimeout(() => this.parentElement.remove(), 400)">&times;</button>
     `;
 
-    container.appendChild(toast);
+            container.appendChild(toast);
 
-    // Auto-remove after 4 seconds
-    setTimeout(() => {
-        toast.classList.add("toast-exit");
-        setTimeout(() => toast.remove(), 400);
-    }, 4000);
-}
+            // Auto-remove after 4 seconds
+            setTimeout(() => {
+                toast.classList.add("toast-exit");
+                setTimeout(() => toast.remove(), 400);
+            }, 4000);
+        }
 
     </script>
 </body>
+
 </html>

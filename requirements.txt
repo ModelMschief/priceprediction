@@ -1,0 +1,8 @@
+Flask
+Flask-Cors
+Werkzeug
+PyJWT
+pandas
+joblib
+scikit-learn
+requests

@@ -11,6 +11,7 @@ import os
 import json
 import uuid
 from functools import wraps
+import math
 import DB_manager
 
 # JWT Configuration
@@ -177,8 +178,7 @@ def reset_password():
 # ==========================================
 
 @app.route("/predict", methods=["POST"])
-@token_required
-def predict_price(current_user):
+def predict_price():
     if model is None:
         return jsonify({"error": "Model not loaded on the server."}), 500
 
@@ -309,6 +309,65 @@ def get_all_houses():
         if isinstance(house.get("images"), str):
             house["images"] = json.loads(house["images"])
     return jsonify({"status": "success", "houses": houses}), 200
+
+@app.route("/api/recommendations", methods=["GET"])
+def get_recommendations():
+    client_ip = request.headers.get('X-Forwarded-For', request.remote_addr)
+    lat_str = request.args.get("lat")
+    long_str = request.args.get("long")
+    
+    if lat_str and long_str:
+        user_lat = float(lat_str)
+        user_long = float(long_str)
+    else:
+        user_lat, user_long = get_location_from_ip(client_ip)
+        
+    houses = DB_manager.get_all_houses()
+    
+    for house in houses:
+        h_lat = house.get("lat")
+        h_long = house.get("long")
+        if h_lat is not None and h_long is not None:
+            house["distance"] = math.hypot(h_lat - user_lat, h_long - user_long)
+        else:
+            house["distance"] = 999999
+            
+        if isinstance(house.get("images"), str):
+            house["images"] = json.loads(house["images"])
+            
+    houses.sort(key=lambda x: x["distance"])
+    return jsonify({"status": "success", "houses": houses[:10]}), 200
+
+@app.route("/api/search", methods=["GET"])
+def search_houses():
+    q = request.args.get("q", "").lower()
+    min_price = request.args.get("min_price", type=float)
+    max_price = request.args.get("max_price", type=float)
+    bedrooms = request.args.get("bedrooms", type=int)
+    
+    houses = DB_manager.get_all_houses()
+    results = []
+    
+    for house in houses:
+        place_str = f"{house.get('address','')} {house.get('city','')} {house.get('state','')} {house.get('title','')}".lower()
+        if q and q not in place_str:
+            continue
+            
+        price = house.get('price', 0)
+        if min_price is not None and price < min_price:
+            continue
+        if max_price is not None and price > max_price:
+            continue
+            
+        if bedrooms is not None and house.get('bedrooms') != bedrooms:
+            continue
+            
+        if isinstance(house.get("images"), str):
+            house["images"] = json.loads(house["images"])
+            
+        results.append(house)
+        
+    return jsonify({"status": "success", "houses": results[:5]}), 200
 
 @app.route("/api/my-houses", methods=["GET"])
 @token_required
